@@ -14,7 +14,7 @@ import { Button } from "./ui/button";
 import { Drawer, DrawerContent, DrawerTitle, DrawerTrigger } from "@/components/ui/drawer";
 import { ModeSwitcher } from "./mode-switcher";
 import { siteConfig } from "@/config/site";
-import { Icons } from "./icons";
+import { SiteLogo } from "./site-logo";
 
 interface MobileNavProps {
   toggleMusic: () => void;
@@ -71,6 +71,16 @@ export function MobileNav({ toggleMusic, playing }: MobileNavProps) {
         </Button>
       </DrawerTrigger>
 
+      {/* Below 375px it would touch the EN key, so only the drawer shows the
+          logo there. -mx-0.5 overlaps its transparent sides. */}
+      <Link
+        href={localizePath("/", locale)}
+        aria-label={`${siteConfig.name} – home`}
+        className="-mx-0.5 flex max-[374px]:hidden md:hidden"
+      >
+        <SiteLogo size={38} />
+      </Link>
+
       <DrawerTitle className="sr-only">Navigation Menu</DrawerTitle>
       
       <DrawerContent className="h-[88vh] border-t border-border/40 bg-background/95 backdrop-blur-xl">
@@ -78,7 +88,9 @@ export function MobileNav({ toggleMusic, playing }: MobileNavProps) {
           {/* Compact Header */}
           <div className="flex items-center justify-between border-b border-border/40 px-5 py-3">
             <div className="flex items-center gap-2.5">
-              <Icons.logo className="h-5 w-5" />
+              {/* With -mx-0.5 it takes the old 20px icon's width, so this
+                  row lays out as before. */}
+              <SiteLogo size={24} className="-mx-0.5" />
               <span className="text-base font-semibold">{siteConfig.name}</span>
             </div>
 

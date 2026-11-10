@@ -7,7 +7,7 @@ import { siteConfig } from "@/config/site";
 import { localeFromPathname, localizePath, stripLocale } from "@/i18n/routing";
 import { cn } from "@/lib/utils";
 import { ExternalLink } from "lucide-react";
-import { Icons } from "./icons";
+import { SiteLogo } from "./site-logo";
 
 export function MainNav() {
   const pathname = usePathname();
@@ -15,8 +15,13 @@ export function MainNav() {
 
   return (
     <div className="mr-4 hidden md:flex">
-      <Link href={home} className="mr-6 flex items-center gap-2.5">
-        <Icons.logo className="h-6 w-6" />
+      {/* Below lg the logo shows alone, so the label names the link. */}
+      <Link
+        href={home}
+        aria-label={`${siteConfig.name} – home`}
+        className="mr-6 flex items-center gap-2.5"
+      >
+        <SiteLogo size={46} />
         <span className="hidden font-semibold tracking-tight lg:inline-block">
           {siteConfig.name}
         </span>
