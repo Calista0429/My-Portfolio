@@ -14,16 +14,17 @@ const IntroductionPage = async () => {
   return (
     <>
       <PageHeader>
-        <PageHeaderHeading>Aditya Domle</PageHeaderHeading>
+        <PageHeaderHeading>Baoxi Huang</PageHeaderHeading>
         <PageHeaderHeading className="mt-2 text-muted-foreground">
           A coder by day, problem-solver by night!
         </PageHeaderHeading>
         <PageHeaderDescription>
-          I am a dedicated Software Engineer specializing in full-stack
-          application development. I enjoy crafting responsive web solutions
-          using modern technologies like Next.js, React, Tailwind CSS, Node.js,
-          Express, and MongoDB, while also applying DevOps practices, continuously
-          aiming to deliver high-quality, comprehensive, user-centric software solutions.
+          I am a Machine Learning & Software Engineer who builds LLM-powered
+          systems end to end, from multi-agent support platforms with RAG,
+          memory and monitoring to dataset deduplication pipelines on AWS. I
+          studied machine learning at The University of Tokyo and have interned
+          as a Machine Learning Engineer at Preferred Networks and as a Software
+          Engineer at Money Forward.
         </PageHeaderDescription>
         <PageActions>
           <Button asChild size="sm" className="rounded-md">

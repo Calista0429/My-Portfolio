@@ -13,15 +13,15 @@ const Pager = ({
   prevTitle,
   nextTitle,
 }: {
-  prevHref: string;
+  prevHref?: string;
   nextHref: string;
-  prevTitle: string;
+  prevTitle?: string;
   nextTitle: string;
 }) => {
   const pathname = usePathname();
   return (
     <div className="flex flex-row items-center justify-between w-full mt-8">
-      {prevHref !== pathname && (
+      {prevHref && prevHref !== pathname && (
         <Button variant="ghost" asChild>
           <Link href={prevHref}>
             <ChevronLeft />

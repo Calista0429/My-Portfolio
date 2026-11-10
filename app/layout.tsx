@@ -29,11 +29,11 @@ export const metadata: Metadata = {
   keywords: siteConfig.keywords,
   authors: [
     {
-      name: 'Aditya Domle',
-      url: 'https://imaditya.vercel.app',
+      name: 'Baoxi Huang',
+      url: siteConfig.url,
     },
   ],
-  creator: 'Aditya Domle',
+  creator: 'Baoxi Huang',
   openGraph: {
     type: 'website',
     locale: 'en_US',
@@ -46,7 +46,6 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: siteConfig.name,
     description: siteConfig.description,
-    creator: '@env_aditya',
   },
   icons: {
     icon: '/favicon.ico',

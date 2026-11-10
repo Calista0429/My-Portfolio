@@ -17,10 +17,11 @@ const SkillsToolsPage = () => {
           Learned by coding all night and debugging all day!
         </PageHeaderHeading>
         <PageHeaderDescription>
-          As a full-stack Software Engineer, I specialize in building scalable
-          web applications using modern technologies such as Next.js, React, and
-          Tailwind CSS. I'm also expanding my expertise into DevOps and cloud
-          practices to create efficient, maintainable, robust web solutions.
+          As a Machine Learning & Software Engineer, I work across the stack:
+          Python for LLM agents, RAG and data pipelines, FastAPI, Redis and
+          ChromaDB on the backend, and React, TypeScript and GraphQL on the
+          frontend. I deploy and operate my work with AWS, Docker, GitHub
+          Actions and Prometheus.
         </PageHeaderDescription>
       </PageHeader>
 

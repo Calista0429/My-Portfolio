@@ -34,7 +34,7 @@ export function MainNav() {
 
         <Link
           target="_blank"
-          href="https://www.linkedin.com/in/adityadomle/"
+          href={siteConfig.links.linkedin}
           className="group flex items-center gap-1.5 text-muted-foreground transition-colors hover:text-foreground"
         >
           LinkedIn
@@ -47,6 +47,15 @@ export function MainNav() {
           className="group flex items-center gap-1.5 text-muted-foreground transition-colors hover:text-foreground"
         >
           Resume
+          <ExternalLink className="h-3 w-3 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+        </Link>
+
+        <Link
+          href={siteConfig.links.blog}
+          target="_blank"
+          className="group flex items-center gap-1.5 text-muted-foreground transition-colors hover:text-foreground"
+        >
+          Blog
           <ExternalLink className="h-3 w-3 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
         </Link>
       </nav>

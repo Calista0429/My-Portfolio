@@ -1,198 +1,137 @@
-export const projects = [
-  {
-    title: "Nike Reimagined | Modern Redesign Concept",
-    slug: "nike-reimagined",
-    tagline:
-      "A sleek and modern redesign of Nike’s official web experience built with React and Tailwind CSS.",
-    overview:
-      "Nike Reimagined is a creative redesign project focused on delivering a refined, high-performance web experience inspired by Nike’s global brand identity. It highlights a clean, minimal UI with smooth transitions, responsive layouts, and optimized performance across devices. The project demonstrates a balance of aesthetics and functionality for a real-world eCommerce feel.",
-    features: [
-      "Minimalist and modern user interface design",
-      "Fully responsive layouts optimized for all devices",
-      "Smooth page transitions and animations with Framer Motion",
-      "Optimized build process with Vite for fast loading",
-      "Deployed on Vercel for production-grade performance",
-    ],
-    techStack: [
-      "React.js",
-      "Tailwind CSS",
-      "Vite",
-      "Framer Motion",
-      "Vercel",
-    ],
-    challenges: [
-      "Maintaining brand consistency while reimagining Nike’s design language.",
-      "Achieving smooth animations without affecting performance.",
-      "Ensuring pixel-perfect responsiveness across devices.",
-      "Optimizing load times for a better user experience.",
-    ],
-    learnings: [
-      "Mastered efficient UI composition with React and Tailwind CSS.",
-      "Improved understanding of animation principles using Framer Motion.",
-      "Enhanced deployment workflow using Vercel and Vite integration.",
-      "Developed better practices for responsive and scalable frontend design.",
-    ],
-    feedback: false,
-    links: {
-      live: "https://nike-reimagined-mu.vercel.app/",
-      github: "https://github.com/adityadomle/nike-reimagined",
-    },
-  },
+type Project = {
+  title: string;
+  slug: string;
+  tagline: string;
+  overview: string;
+  features: string[];
+  techStack: string[];
+  challenges: string[];
+  learnings: string[];
+  feedback: boolean;
+  links: {
+    live?: string;
+    github?: string;
+  };
+};
 
+export const projects: Project[] = [
   {
-    title: "Portfolio | Aditya Domle",
-    slug: "portfolio",
+    title: "SupportMesh | Multi-Agent Customer Support Platform",
+    slug: "supportmesh",
     tagline:
-      "A dynamic portfolio showcasing my projects, skills, and contributions using the latest web technologies.",
+      "An explainable, observable multi-agent support harness that routes enterprise support requests to specialist agents.",
     overview:
-      "My personal portfolio is built to highlight my journey as a developer. It integrates advanced features like profile views tracking, a love count mechanism, and server-side actions for seamless interactivity and performance.",
+      "SupportMesh is an enterprise customer-service system built on large language models. Each request is classified by a hybrid intent router, routed to a General, Technical or Billing agent, answered with retrieval from a knowledge base, and remembered across turns. Product inquiries, technical incidents and after-sales requests are handled with human escalation, Prometheus monitoring, LLM-as-Judge evaluation and Docker deployment built in rather than bolted on.",
     features: [
-      "API to track and display profile views in real-time.",
-      "Love count feature to allow visitors to express appreciation for the work.",
-      "Implemented server actions using the latest Next.js features.",
-      "Dynamic project listing with slug-based routing for detailed pages.",
-      "Mobile-responsive and optimized for all devices.",
-      "Integration with MongoDB using Mongoose for efficient data management.",
+      "Hybrid intent router fusing LLM, embedding and pattern-matching signals to classify requests into 19 intents and 4 urgency levels, reaching 91.3% accuracy and 0.89 macro-F1 on about 500 labeled cases.",
+      "Intent-gated ChromaDB RAG with 3 query rewrites, multi-path retrieval, deduplication, reranking, caching and a circuit-breaker fallback, achieving 88.7% answer accuracy and 91.2% retrieval recall.",
+      "Tiered memory with Redis working memory plus ChromaDB episodic memory and user profiles, using a 24-hour TTL and compression after 15 messages that keeps the latest 5.",
+      "Hot-loadable Skills: business rules written in Markdown, injected into an agent's system prompt and reloaded without a restart.",
+      "Prometheus metrics, Z-score anomaly detection and 5% degradation alerts, with routing penalties fed back to the orchestrator.",
+      "LLM-as-Judge evaluation across 5 end-to-end suites, with regression detection against a baseline.",
+      "Vue 3 console with a trace panel that shows how the backend routed each request.",
     ],
     techStack: [
-      "Next.js",
-      "SadCn/UI",
-      "MongoDB",
-      "Tailwind CSS",
-      "Radix UI",
-      "TypeScript",
+      "Python",
+      "FastAPI",
+      "Redis",
+      "ChromaDB",
+      "Docker",
+      "Prometheus",
+      "Anthropic API",
+      "Vue 3",
     ],
     challenges: [
-      "Implementing real-time tracking for profile views efficiently.",
-      "Designing and integrating a scalable database schema with Mongoose.",
-      "Utilizing server actions for seamless and performant interactions.",
-      "Ensuring cross-browser and device compatibility for UI components.",
+      "Keeping each agent inside its scope when one message mixes problems, such as a login failure combined with a duplicate charge.",
+      "Grounding answers in business policy so an agent never promises an outcome it cannot guarantee.",
+      "Carrying context across turns without letting the prompt grow unbounded.",
+      "Staying responsive when retrieval or tool calls fail.",
     ],
     learnings: [
-      "Deepened knowledge of Next.js server actions and their use cases.",
-      "Gained experience in designing interactive UI components.",
-      "Enhanced understanding of MongoDB operations and ORM with Mongoose.",
-      "Improved ability to optimize performance for web applications.",
+      "Encoding business rules as hot-loadable Skills keeps agent behaviour bounded by policy rather than by the model's discretion.",
+      "Building monitoring and evaluation in from the start makes routing decisions observable and regressions detectable.",
+      "Feeding live performance metrics back into routing lets the system down-weight degraded paths automatically.",
     ],
     feedback: true,
     links: {
-      live: "https://aadi.is-a.dev",
-      github: "https://topmate.io/aditya_domle/1773422",
+      github: "https://github.com/Calista0429/SupportMesh",
     },
   },
   {
-    title: "News Hub | Real-Time News Platform",
-    slug: "news-hub",
+    title: "LSHBloom on peS2o | Deduplication for LLM Pretraining",
+    slug: "lshbloom-pes2o",
     tagline:
-      "A real-time news platform delivering the latest headlines across various categories using the News API.",
+      "Measuring how LSHBloom deduplication changes the cost and quality of continued pretraining for Qwen2.5-0.5B.",
     overview:
-      "News Hub is a responsive and dynamic web application designed to provide users with up-to-date news from India and around the world. Built with React and TypeScript, the platform integrates the News API to fetch real-time stories, organized into categories like technology, business, sports, and entertainment. The clean UI ensures a smooth reading experience, while the optimized frontend guarantees fast performance.",
+      "Extending my internship work at Preferred Networks, this project evaluates how MinHashLSH and LSHBloom deduplication affect continued pretraining on a 5,000-document peS2o sample, with data preparation code, reproducible Colab notebooks, validation helpers and measured Qwen2.5-0.5B results. Training on LSHBloom-deduplicated data cut training tokens by 8.46% and A100 GPU time by 8.47%, with validation perplexity within 0.34% of the raw data and a 1.1-point gain in SciQ normalized accuracy.",
     features: [
-      "Real-time news updates fetched from the News API.",
-      "Categorized news sections for better content navigation.",
-      "Responsive design for an optimal viewing experience on all devices.",
-      "Built with Vite for fast development and performance optimization.",
-      "Clean and accessible UI components powered by shadcn/ui and Tailwind CSS.",
+      "Prepares Raw, MinHashLSH and LSHBloom variants of a peS2o sample at a Jaccard threshold of 0.5 with 256 MinHash permutations, plus a manifest of counts and hashes.",
+      "Reproducible Colab notebooks for Qwen2.5-0.5B continued pretraining under an equal token budget and over one full corpus epoch.",
+      "Evaluation with peS2o validation perplexity and zero-shot SciQ accuracy using lm-evaluation-harness.",
+      "A PLaMo-2-1B replication notebook that applies the same equal-compute protocol on an A100.",
+      "Versioned result tables and publication-ready figures, regenerated by scripts.",
+      "Unit, notebook and repository-structure tests, checked with pytest and ruff.",
+    ],
+    techStack: [
+      "Python",
+      "PyTorch",
+      "Hugging Face Transformers",
+      "datasketch",
+      "lm-evaluation-harness",
+      "Google Colab",
+    ],
+    challenges: [
+      "Keeping the comparison fair by fixing the token budget, model revision, seed, validation hashes and hyperparameters across all three variants.",
+      "Interpreting a single-seed pilot in which the LSHBloom run used a different PyTorch version from the other two.",
+      "Continued pretraining lowered base-model SciQ performance in all three runs, pointing to catastrophic forgetting, an aggressive training setup or a corpus-to-task mismatch.",
+    ],
+    learnings: [
+      "LSHBloom closely matches MinHashLSH: the two methods agreed on 4,994 of 5,000 retention decisions (99.88%).",
+      "Deduplication reduced training tokens and GPU hours by about 8.5% while keeping endpoint quality comparable to the raw data.",
+      "Turning the pilot into a causal claim requires rerunning every variant in one pinned environment with at least three seeds.",
+    ],
+    feedback: true,
+    links: {
+      github: "https://github.com/Calista0429/LSHBloom-peS2o",
+    },
+  },
+  {
+    title: "Effective | AI-Assisted Employee Onboarding",
+    slug: "employee-onboarding-agent",
+    tagline:
+      "A local-first HR onboarding platform where a tool-calling AI agent carries out HR work from Japanese instructions.",
+    overview:
+      "Extending my internship work at Money Forward, Effective explores what happens around an employee information form. HR composes templates from three sections (personal information, payroll bank account and commuting), invites new hires and reviews their submissions, while employees save drafts, confirm their details and submit. An AI assistant performs the HR work from Japanese instructions, and a scheduled job reminds employees who have not submitted. It runs entirely on a local machine with synthetic data and is not a Money Forward product.",
+    features: [
+      "Template builder with three configurable sections and required-field settings; every invitation keeps an immutable snapshot of its template.",
+      "Employee forms with draft saving, a confirmation step and account numbers masked until explicitly revealed.",
+      "Tool-calling agent that changes data only through 5 guarded tools reusing the UI's domain validation, so no agent action can bypass validation or ownership checks.",
+      "Pluggable model providers: a deterministic offline provider by default, or an OpenAI-compatible backend such as DeepSeek.",
+      "Notification centre, simulated mailbox and a reminder scheduler that chases non-submitters.",
+      "Audit trail covering every invitation, message, submission and HR confirmation.",
     ],
     techStack: [
       "React",
       "TypeScript",
-      "Tailwind CSS",
+      "Node.js",
       "Vite",
-      "shadcn-ui",
+      "Vitest",
+      "DeepSeek API",
     ],
     challenges: [
-      "Integrating and managing dynamic data from the News API.",
-      "Designing a clean UI to handle real-time content updates efficiently.",
-      "Optimizing performance and build times using Vite.",
-      "Ensuring responsiveness and accessibility across devices.",
+      "Letting an AI agent change real data without giving it a way around business rules.",
+      "Handling payroll details safely: bank and branch codes keep their leading zeroes, and account numbers stay masked in summaries.",
+      "Rejecting stale edits with conditional version checks so retried submissions never duplicate history.",
+      "Keeping delivery state separate from form progress so a failed delivery can be retried without creating another task.",
     ],
     learnings: [
-      "Improved understanding of working with external APIs in React applications.",
-      "Enhanced experience in using TypeScript for type-safe development.",
-      "Learned to optimize frontend builds using Vite and modular UI design.",
-      "Developed better state management practices for dynamic data handling.",
+      "Sharing one domain layer between the UI, the store and the agent tools keeps every path consistent.",
+      "A deterministic offline provider makes an agent testable without an API key or network access.",
+      "Constraining an agent to a fixed catalogue of tools keeps its behaviour predictable.",
     ],
     feedback: true,
     links: {
-      live: "https://news-hub-seven-chi.vercel.app/",
-      github: "https://github.com/adityadomle/news-hub",
-    },
-  },
-  {
-    title: "Freshmart Store | Modern Grocery Web App",
-    slug: "freshmart-store",
-    tagline:
-      "A clean, modern, and responsive grocery store web app built with React, Vite, Redux, and Tailwind CSS.",
-    overview:
-      "Freshmart Store is a modern grocery shopping platform designed to offer users a seamless and visually appealing experience. Built using React and Vite, it focuses on performance and smooth navigation. Redux ensures efficient state management for cart operations and product handling, while Tailwind CSS provides a clean and responsive interface optimized for all devices.",
-    features: [
-      "Modern and responsive UI optimized for all screen sizes.",
-      "Smooth routing and navigation for an app-like experience.",
-      "State management using Redux for efficient cart and product updates.",
-      "Fast development and performance optimization powered by Vite.",
-      "Clean design and user-friendly layout for better usability.",
-    ],
-    techStack: [
-      "React",
-      "Vite",
-      "Redux",
-      "Tailwind CSS",
-    ],
-    challenges: [
-      "Implementing scalable state management with Redux.",
-      "Ensuring responsive and consistent UI across devices.",
-      "Optimizing performance and build speed using Vite.",
-      "Designing a smooth and intuitive navigation flow.",
-    ],
-    learnings: [
-      "Enhanced understanding of Redux for managing global state efficiently.",
-      "Improved skills in responsive UI design using Tailwind CSS.",
-      "Learned performance tuning techniques with Vite.",
-      "Gained experience in creating scalable and maintainable frontend structures.",
-    ],
-    feedback: true,
-    links: {
-      live: "https://freshmart-store.vercel.app",
-      github: "https://github.com/adityadomle/freshmart-store",
-    },
-  },
-  {
-    title: "GitHub Profile Viewer | Instant GitHub Insights",
-    slug: "github-profile-viewer",
-    tagline:
-      "An interactive web app to instantly view GitHub profiles with clean UI built using HTML, CSS, and JavaScript.",
-    overview:
-      "GitHub Profile Viewer allows users to instantly fetch and view detailed GitHub profiles using the GitHub REST API. The app displays essential user information including profile picture, name, bio, followers, repositories, and more. With a responsive and minimalist interface, it offers a smooth experience for exploring any GitHub account directly from the browser.",
-    features: [
-      "Instantly search and view any GitHub user's profile.",
-      "Displays profile picture, username, bio, followers, and repositories.",
-      "Responsive and clean user interface for better readability.",
-      "Utilizes GitHub REST API for fetching real-time profile data.",
-      "Lightweight structure ensuring fast performance and accessibility.",
-    ],
-    techStack: [
-      "HTML",
-      "CSS",
-      "JavaScript",
-      "GitHub API",
-    ],
-    challenges: [
-      "Fetching and managing API data efficiently with JavaScript.",
-      "Designing a clean, minimal, and responsive interface.",
-      "Handling errors for invalid or non-existent GitHub users.",
-      "Ensuring smooth and fast data rendering without frameworks.",
-    ],
-    learnings: [
-      "Strengthened understanding of API integration using JavaScript.",
-      "Improved skills in building responsive layouts with pure CSS.",
-      "Learned effective DOM manipulation and async handling.",
-      "Enhanced ability to design lightweight, framework-free web apps.",
-    ],
-    feedback: true,
-    links: {
-      live: "https://adityadomle.github.io/GitHub-Profile-Viewer/",
-      github: "https://github.com/adityadomle/GitHub-Profile-Viewer",
+      github: "https://github.com/Calista0429/employee-onboarding-agent",
     },
   },
 ];

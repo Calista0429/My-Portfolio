@@ -17,9 +17,10 @@ const EducationPage = () => {
         </PageHeaderHeading>
         <PageHeaderDescription>
           Education has always been the cornerstone of my journey into the tech
-          world. Pursuing a Bachelor's in Computer Application (BCA) at GH Raisoni
-          College of Engineering and Management, Nagpur, has provided me a
-          strong foundation in computer science and software development.
+          world. My Bachelor's in Data Science and Big Data Technology at Jilin
+          University gave me my foundation in data and computing, and my
+          Master's in Environment Systems at The University of Tokyo, with a
+          machine learning focus in the Mizuno Lab, took it into research.
         </PageHeaderDescription>
 
         <PageHeaderDescription>
@@ -33,9 +34,9 @@ const EducationPage = () => {
 
       <Pager
         prevHref="/experience"
-        nextHref="/contact"
+        nextHref="/stats"
         prevTitle="Experience"
-        nextTitle="Contact"
+        nextTitle="Stats"
       />
     </>
   );

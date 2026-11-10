@@ -40,8 +40,8 @@ export function MobileNav({ toggleMusic, playing }: MobileNavProps) {
     [setMetaColor, metaColor]
   );
 
-  const formattedTime = time.toLocaleTimeString('en-IN', {
-    timeZone: 'Asia/Kolkata',
+  const formattedTime = time.toLocaleTimeString('en-US', {
+    timeZone: 'Asia/Tokyo',
     hour: '2-digit',
     minute: '2-digit',
     hour12: true,

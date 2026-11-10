@@ -114,7 +114,7 @@ const Stats = async () => {
             )}
             {views.success && (
               <p className="text-sm text-muted-foreground text-center mt-4 max-w-[80%]">
-                Unique page visits since Oct-2025
+                Unique page visits since launch
               </p>
             )}
           </div>
@@ -191,9 +191,9 @@ const Stats = async () => {
       </div>
 
       <Pager
-        prevHref="/contact"
+        prevHref="/education"
         nextHref="/"
-        prevTitle="Contact"
+        prevTitle="Education"
         nextTitle="Home"
       />
     </>

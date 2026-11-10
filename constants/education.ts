@@ -2,19 +2,14 @@ import { TimelineViewerData } from '@/types/TimelineViewer.types';
 
 export const education: TimelineViewerData[] = [
   {
+    title: 'Master of Environment Systems · The University of Tokyo · Japan',
+    date: 'Oct 2024 – Sep 2026',
+    description: `Mizuno Lab, with a focus on machine learning. Teaching assistant for Data Structure and Algorithm.`,
+  },
+  {
     title:
-      'Bachelor of Computer Application · GH Raisoni College of Engineering and Management · Nagpur, India',
-    date: 'Aug 2023 – June 2026 (Expected)',
-    description: `Pursuing BCA with a focus on programming, web development, and software engineering. Current CGPA: 8.40.`,
-  },
-  {
-    title: 'Higher Secondary Education · NPW Science College · Lakhani',
-    date: 'July 2021 – May 2023',
-    description: `Completed 12th in Information Technology. Overall: 70%, IT: 95%.`,
-  },
-  {
-    title: 'Secondary Education · Shivaji Vidyalaya Seloti/Manegaon · SEE',
-    date: 'Apr 2012 – Mar 2021',
-    description: `Completed 10th grade with 82%. Assisted peers in learning computer skills through hands-on lab sessions.`,
+      'Bachelor of Data Science and Big Data Technology · Jilin University · China',
+    date: 'Oct 2020 – Jul 2024',
+    description: `Top 3% of graduates. First prize in the college scholarship and third prize in the Mathematical Contest in Modeling.`,
   },
 ];
