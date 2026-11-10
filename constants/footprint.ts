@@ -10,6 +10,9 @@ export type Place = {
   note?: string;
   /** A blog post or album about the place. */
   link?: { href: string; label: string };
+  // Japanese text for the language toggle; same field names as the English.
+  // Country names are translated in i18n/messages (footprint.countries).
+  ja: { name: string; period?: string; note?: string };
 };
 
 // To add a place, copy an entry and edit it. For coordinates, right-click the
@@ -25,6 +28,7 @@ export const places: Place[] = [
     lng: 139.6917,
     period: '2024 – 2026',
     note: 'Master’s at The University of Tokyo.',
+    ja: { name: '東京', period: '2024年〜2026年', note: '東京大学大学院（修士課程）' },
   },
   {
     id: 'kyoto',
@@ -32,6 +36,7 @@ export const places: Place[] = [
     country: 'Japan',
     lat: 35.0116,
     lng: 135.7681,
+    ja: { name: '京都' },
   },
   {
     id: 'toyama',
@@ -39,6 +44,7 @@ export const places: Place[] = [
     country: 'Japan',
     lat: 36.6953,
     lng: 137.2113,
+    ja: { name: '富山' },
   },
   {
     id: 'nagano',
@@ -46,6 +52,7 @@ export const places: Place[] = [
     country: 'Japan',
     lat: 36.6486,
     lng: 138.1948,
+    ja: { name: '長野' },
   },
   {
     id: 'nara',
@@ -53,6 +60,7 @@ export const places: Place[] = [
     country: 'Japan',
     lat: 34.6851,
     lng: 135.8048,
+    ja: { name: '奈良' },
   },
   {
     id: 'osaka',
@@ -60,6 +68,7 @@ export const places: Place[] = [
     country: 'Japan',
     lat: 34.6937,
     lng: 135.5023,
+    ja: { name: '大阪' },
   },
   {
     id: 'chiba',
@@ -67,6 +76,7 @@ export const places: Place[] = [
     country: 'Japan',
     lat: 35.6074,
     lng: 140.1065,
+    ja: { name: '千葉' },
   },
   {
     id: 'changchun',
@@ -76,6 +86,7 @@ export const places: Place[] = [
     lng: 125.32,
     period: '2020 – 2024',
     note: 'Bachelor’s at Jilin University.',
+    ja: { name: '長春', period: '2020年〜2024年', note: '吉林大学（学士課程）' },
   },
   {
     id: 'guangzhou',
@@ -83,6 +94,7 @@ export const places: Place[] = [
     country: 'China',
     lat: 23.1291,
     lng: 113.2644,
+    ja: { name: '広州' },
   },
   {
     id: 'shenzhen',
@@ -90,6 +102,7 @@ export const places: Place[] = [
     country: 'China',
     lat: 22.5431,
     lng: 114.0579,
+    ja: { name: '深圳' },
   },
   {
     id: 'zhuhai',
@@ -97,6 +110,7 @@ export const places: Place[] = [
     country: 'China',
     lat: 22.271,
     lng: 113.5767,
+    ja: { name: '珠海' },
   },
   {
     id: 'macau',
@@ -104,6 +118,7 @@ export const places: Place[] = [
     country: 'China',
     lat: 22.1987,
     lng: 113.5439,
+    ja: { name: 'マカオ' },
   },
   {
     id: 'hong-kong',
@@ -111,6 +126,7 @@ export const places: Place[] = [
     country: 'China',
     lat: 22.3193,
     lng: 114.1694,
+    ja: { name: '香港' },
   },
   {
     id: 'beijing',
@@ -118,6 +134,7 @@ export const places: Place[] = [
     country: 'China',
     lat: 39.9042,
     lng: 116.4074,
+    ja: { name: '北京' },
   },
   {
     id: 'qingdao',
@@ -125,6 +142,7 @@ export const places: Place[] = [
     country: 'China',
     lat: 36.0669,
     lng: 120.3828,
+    ja: { name: '青島' },
   },
   {
     id: 'weihai',
@@ -132,6 +150,7 @@ export const places: Place[] = [
     country: 'China',
     lat: 37.5133,
     lng: 122.12,
+    ja: { name: '威海' },
   },
   {
     id: 'lijiang',
@@ -139,6 +158,7 @@ export const places: Place[] = [
     country: 'China',
     lat: 26.8725,
     lng: 100.23,
+    ja: { name: '麗江' },
   },
   {
     id: 'shanghai',
@@ -146,6 +166,7 @@ export const places: Place[] = [
     country: 'China',
     lat: 31.2304,
     lng: 121.4737,
+    ja: { name: '上海' },
   },
   {
     id: 'nanjing',
@@ -153,6 +174,7 @@ export const places: Place[] = [
     country: 'China',
     lat: 32.0584,
     lng: 118.7965,
+    ja: { name: '南京' },
   },
   {
     id: 'tianjin',
@@ -160,6 +182,7 @@ export const places: Place[] = [
     country: 'China',
     lat: 39.1336,
     lng: 117.2054,
+    ja: { name: '天津' },
   },
   {
     // The seaside community in Qinhuangdao, Hebei; the marker is on its chapel.
@@ -168,6 +191,7 @@ export const places: Place[] = [
     country: 'China',
     lat: 39.6536,
     lng: 119.3163,
+    ja: { name: '阿那亜' },
   },
   {
     id: 'sanya',
@@ -175,6 +199,7 @@ export const places: Place[] = [
     country: 'China',
     lat: 18.2525,
     lng: 109.5117,
+    ja: { name: '三亜' },
   },
   {
     id: 'changsha',
@@ -182,6 +207,7 @@ export const places: Place[] = [
     country: 'China',
     lat: 28.2281,
     lng: 112.9389,
+    ja: { name: '長沙' },
   },
   {
     id: 'xian',
@@ -189,6 +215,7 @@ export const places: Place[] = [
     country: 'China',
     lat: 34.261,
     lng: 108.9423,
+    ja: { name: '西安' },
   },
   {
     id: 'chengdu',
@@ -196,6 +223,7 @@ export const places: Place[] = [
     country: 'China',
     lat: 30.6574,
     lng: 104.0659,
+    ja: { name: '成都' },
   },
   {
     // A whole region: the marker sits on its capital, Ürümqi.
@@ -204,6 +232,7 @@ export const places: Place[] = [
     country: 'China',
     lat: 43.8244,
     lng: 87.6139,
+    ja: { name: '新疆' },
   },
   {
     id: 'fuzhou',
@@ -211,6 +240,7 @@ export const places: Place[] = [
     country: 'China',
     lat: 26.0775,
     lng: 119.2918,
+    ja: { name: '福州' },
   },
   {
     id: 'xiamen',
@@ -218,6 +248,7 @@ export const places: Place[] = [
     country: 'China',
     lat: 24.4801,
     lng: 118.0853,
+    ja: { name: '厦門' },
   },
   {
     id: 'shantou',
@@ -225,6 +256,7 @@ export const places: Place[] = [
     country: 'China',
     lat: 23.3564,
     lng: 116.6776,
+    ja: { name: '汕頭' },
   },
   {
     // Shunde and Nanhai are districts of Foshan, Guangdong.
@@ -233,6 +265,7 @@ export const places: Place[] = [
     country: 'China',
     lat: 22.8055,
     lng: 113.2894,
+    ja: { name: '順徳' },
   },
   {
     id: 'nanhai',
@@ -240,6 +273,7 @@ export const places: Place[] = [
     country: 'China',
     lat: 23.0314,
     lng: 113.1375,
+    ja: { name: '南海' },
   },
   {
     id: 'kuala-lumpur',
@@ -247,6 +281,7 @@ export const places: Place[] = [
     country: 'Malaysia',
     lat: 3.139,
     lng: 101.6869,
+    ja: { name: 'クアラルンプール' },
   },
   {
     id: 'singapore',
@@ -254,6 +289,7 @@ export const places: Place[] = [
     country: 'Singapore',
     lat: 1.3521,
     lng: 103.8198,
+    ja: { name: 'シンガポール' },
   },
   {
     id: 'busan',
@@ -261,5 +297,6 @@ export const places: Place[] = [
     country: 'South Korea',
     lat: 35.1796,
     lng: 129.0756,
+    ja: { name: '釜山' },
   },
 ];
