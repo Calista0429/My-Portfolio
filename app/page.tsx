@@ -1,6 +1,7 @@
 import { getGitHubStatsServerAction } from '@/app/actions/getGitHubStatsServerAction';
 import { FootprintExplorer } from '@/components/footprint-explorer';
 import GitHubGraphs from '@/components/github-graphs';
+import { HomePreloader } from '@/components/home-preloader';
 import {
   PageHeader,
   PageHeaderDescription,
@@ -31,6 +32,9 @@ const HomePage = async () => {
 
   return (
     <>
+      {/* Plays over the page below on a full load of the homepage. */}
+      <HomePreloader />
+
       <PageHeader className="mb-4">
         <PageHeaderHeading>GitHub Stats</PageHeaderHeading>
         <PageHeaderDescription>
