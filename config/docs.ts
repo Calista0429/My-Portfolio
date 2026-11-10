@@ -35,6 +35,11 @@ export const docsConfig = {
           items: [],
         },
         {
+          title: 'Footprint',
+          href: '/footprint',
+          items: [],
+        },
+        {
           title: 'Stats',
           href: '/stats',
           items: [],
