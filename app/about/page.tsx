@@ -47,8 +47,8 @@ const AboutMePage = () => {
   return (
     <>
       <PageHeader className="pb-8">
-        {/* The photo sits beside the name; on phones the contact list runs
-            full width below both instead of being squeezed next to the photo. */}
+        {/* The photo sits beside the name. Below laptop width the contact list
+            runs full width under both, so the LinkedIn URL never has to wrap. */}
         <div className="grid w-full grid-cols-[minmax(0,1fr)_auto] gap-x-6">
           <div>
             <PageHeaderHeading>Baoxi Huang</PageHeaderHeading>
@@ -60,11 +60,11 @@ const AboutMePage = () => {
             src={profilePhoto}
             alt="Baoxi Huang"
             placeholder="blur"
-            sizes="(min-width: 640px) 144px, 96px"
-            className="size-24 self-start rounded-2xl object-cover sm:row-span-2 sm:size-36"
+            sizes="(min-width: 1024px) 224px, (min-width: 640px) 168px, 112px"
+            className="size-28 self-start rounded-2xl object-cover sm:size-40 lg:row-span-2 lg:size-48"
             priority
           />
-          <dl className="col-span-2 mt-4 grid grid-cols-[max-content_minmax(0,1fr)] gap-x-3 gap-y-1 text-sm sm:col-span-1 sm:text-base">
+          <dl className="col-span-2 mt-4 grid grid-cols-[max-content_minmax(0,1fr)] gap-x-3 gap-y-1 text-sm sm:text-base lg:col-span-1">
             {contacts.map(({ label, href }) => (
               <Fragment key={label}>
                 <dt>{label}</dt>
