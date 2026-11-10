@@ -6,14 +6,14 @@ import { ArrowLeftIcon, ExternalLinkIcon } from 'lucide-react';
 import Link from 'next/link';
 import { useState } from 'react';
 
-// The map plus a side panel that lists every place, or shows the one picked
-// on the map or in the list.
+// The map plus a side panel that lists every place by country, or shows the
+// one picked on the map or in the list.
 export function FootprintExplorer({ places }: { places: Place[] }) {
   const [selectedId, setSelectedId] = useState<string | null>(null);
   // Where keyboard focus goes back to after leaving a place's details.
   const [returnFocusId, setReturnFocusId] = useState<string | null>(null);
   const selected = places.find((place) => place.id === selectedId);
-  const countries = new Set(places.map((place) => place.country)).size;
+  const countries = groupByCountry(places);
 
   const select = (id: string | null) => {
     if (id === null) setReturnFocusId(selectedId);
@@ -36,32 +36,37 @@ export function FootprintExplorer({ places }: { places: Place[] }) {
             <h2 className="mb-1! text-sm! font-semibold uppercase tracking-wide!">
               Places
             </h2>
-            <div className="mb-3 text-sm text-muted-foreground">
+            <div className="text-sm text-muted-foreground">
               {plural(places.length, 'place', 'places')} in{' '}
-              {plural(countries, 'country', 'countries')}
+              {plural(countries.length, 'country', 'countries')}
             </div>
-            <ul className="-mx-2 space-y-0.5">
-              {places.map((place) => (
-                <li key={place.id}>
-                  <button
-                    type="button"
-                    onClick={() => select(place.id)}
-                    autoFocus={place.id === returnFocusId}
-                    className="flex w-full items-baseline justify-between gap-3 rounded-md px-2 py-1.5 text-left text-sm transition-colors outline-none hover:bg-muted focus-visible:ring-[3px] focus-visible:ring-ring/50"
-                  >
-                    <span className="min-w-0">
-                      <span className="font-medium">{place.name}</span>
-                      <span className="text-muted-foreground">
-                        , {place.country}
-                      </span>
-                    </span>
-                    <span className="shrink-0 text-xs text-muted-foreground">
-                      {place.period}
-                    </span>
-                  </button>
-                </li>
-              ))}
-            </ul>
+            {countries.map(({ country, places: inCountry }) => (
+              <div key={country} className="mt-4">
+                <h3 className="mb-1! flex justify-between text-xs! font-medium! tracking-normal! text-muted-foreground">
+                  <span>{country}</span>
+                  <span className="tabular-nums">{inCountry.length}</span>
+                </h3>
+                <ul className="-mx-2 space-y-0.5">
+                  {inCountry.map((place) => (
+                    <li key={place.id}>
+                      <button
+                        type="button"
+                        onClick={() => select(place.id)}
+                        autoFocus={place.id === returnFocusId}
+                        className="flex w-full items-baseline justify-between gap-3 rounded-md px-2 py-1.5 text-left text-sm font-medium transition-colors outline-none hover:bg-muted focus-visible:ring-[3px] focus-visible:ring-ring/50"
+                      >
+                        {place.name}
+                        {place.period && (
+                          <span className="shrink-0 text-xs font-normal text-muted-foreground">
+                            {place.period}
+                          </span>
+                        )}
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
           </>
         )}
       </aside>
@@ -82,8 +87,12 @@ function PlaceDetails({ place, onBack }: { place: Place; onBack: () => void }) {
         All places
       </button>
       <h2 className="mb-1!">{place.name}</h2>
-      <div className="text-muted-foreground">{place.country}</div>
-      <div className="text-muted-foreground">{place.period}</div>
+      {place.country !== place.name && (
+        <div className="text-muted-foreground">{place.country}</div>
+      )}
+      {place.period && (
+        <div className="text-muted-foreground">{place.period}</div>
+      )}
       {place.note && <div className="mt-3">{place.note}</div>}
       {place.link && (
         <Link
@@ -98,6 +107,18 @@ function PlaceDetails({ place, onBack }: { place: Place; onBack: () => void }) {
       )}
     </div>
   );
+}
+
+// Countries in the order they first appear in the data, each with its places.
+function groupByCountry(places: Place[]) {
+  const groups = new Map<string, Place[]>();
+  for (const place of places) {
+    groups.set(place.country, [...(groups.get(place.country) ?? []), place]);
+  }
+  return Array.from(groups, ([country, inCountry]) => ({
+    country,
+    places: inCountry,
+  }));
 }
 
 function plural(count: number, one: string, many: string) {

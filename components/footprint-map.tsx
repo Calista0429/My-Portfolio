@@ -61,7 +61,11 @@ export function FootprintMap({
           className: 'fill-primary stroke-background',
           bubblingMouseEvents: false,
         })
-          .bindTooltip(`${place.name}, ${place.country}`)
+          .bindTooltip(
+            place.name === place.country
+              ? place.name
+              : `${place.name}, ${place.country}`
+          )
           .on('click', () => onSelectRef.current(place.id))
           .addTo(map);
         markers.set(place.id, marker);
