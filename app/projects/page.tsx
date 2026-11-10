@@ -1,11 +1,7 @@
 import { PageHeader, PageHeaderHeading } from '@/components/page-header';
 import Pager from '@/components/pager';
-import {
-  Card,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card';
+import { ProjectCover } from '@/components/project-cover';
+import { Card, CardHeader, CardTitle } from '@/components/ui/card';
 import { projects } from '@/constants/projects';
 import Link from 'next/link';
 
@@ -24,21 +20,35 @@ const ProjectsPage = () => {
           <Card
             title={project.overview}
             key={index}
-            className="relative w-full transition-all duration-300 cursor-pointer isolate hover:scale-105"
+            className="relative w-full gap-3 pt-4 pb-3 transition-all duration-300 cursor-pointer isolate hover:scale-105 has-[a:focus-visible]:ring-[3px] has-[a:focus-visible]:ring-ring/50 motion-reduce:transition-none motion-reduce:hover:scale-100"
           >
-            <CardHeader>
-              <CardTitle className="leading-6">{project.title}</CardTitle>
-              <CardDescription className="flex flex-col gap-2">
-                {project.tagline}
+            <CardHeader className="px-4">
+              <CardTitle className="leading-snug text-center text-balance">
                 <Link
                   href={`/projects/${project.slug}`}
-                  className="text-muted-foreground "
+                  className="outline-none"
                 >
-                  Learn More...
+                  {project.title.split(' | ').map((part, i) => (
+                    <span
+                      key={part}
+                      className={
+                        i === 0
+                          ? 'block'
+                          : 'mt-1 block text-sm font-normal text-muted-foreground'
+                      }
+                    >
+                      {part}
+                    </span>
+                  ))}
                   <span className="absolute inset-0"></span>
                 </Link>
-              </CardDescription>
+              </CardTitle>
             </CardHeader>
+            <ProjectCover
+              project={project}
+              sizes="(min-width: 1024px) 300px, (min-width: 768px) 45vw, 100vw"
+              className="mx-3 mt-auto"
+            />
           </Card>
         ))}
       </div>

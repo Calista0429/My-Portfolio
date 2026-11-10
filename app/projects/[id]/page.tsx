@@ -4,6 +4,7 @@ import {
   PageHeaderDescription,
   PageHeaderHeading,
 } from '@/components/page-header';
+import { ProjectCover } from '@/components/project-cover';
 import { Badge } from '@/components/ui/badge';
 
 import { siteConfig } from '@/config/site';
@@ -54,6 +55,14 @@ const ProjectDetails = async ({
       <PageHeader>
         <PageHeaderHeading>{project.title}</PageHeaderHeading>
         <PageHeaderDescription>{project.tagline}</PageHeaderDescription>
+        {project.cover && (
+          <ProjectCover
+            project={project}
+            sizes="(min-width: 1024px) 860px, 100vw"
+            priority
+            className="my-4 w-full p-4 md:aspect-[2/1] md:p-6"
+          />
+        )}
         <PageHeaderDescription>{project.overview}</PageHeaderDescription>
       </PageHeader>
 
