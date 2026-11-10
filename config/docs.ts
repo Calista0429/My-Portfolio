@@ -34,16 +34,6 @@ export const docsConfig = {
           href: '/education',
           items: [],
         },
-        {
-          title: 'Footprint',
-          href: '/footprint',
-          items: [],
-        },
-        {
-          title: 'Stats',
-          href: '/stats',
-          items: [],
-        },
       ],
     },
   ],

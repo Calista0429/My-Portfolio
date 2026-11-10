@@ -62,6 +62,7 @@ const GitHubGraphs = () => {
           showWeekdayLabels={true}
           blockMargin={6}
           transformData={transformThreeMonths}
+          labels={{ totalCount: "{{count}} contributions in the last 3 months" }}
         />
       </div>
 

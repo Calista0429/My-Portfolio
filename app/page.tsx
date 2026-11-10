@@ -1,54 +1,92 @@
+import { getGitHubStatsServerAction } from '@/app/actions/getGitHubStatsServerAction';
+import { FootprintExplorer } from '@/components/footprint-explorer';
+import GitHubGraphs from '@/components/github-graphs';
 import {
-  PageActions,
   PageHeader,
   PageHeaderDescription,
   PageHeaderHeading,
 } from '@/components/page-header';
 import Pager from '@/components/pager';
-import { Button } from '@/components/ui/button';
-import { siteConfig } from '@/config/site';
-import { ExternalLink, Mail } from 'lucide-react';
-import Link from 'next/link';
+import { places } from '@/constants/footprint';
+import { cn } from '@/lib/utils';
 
-const IntroductionPage = async () => {
+// Rebuild the page at most once an hour, so the GitHub numbers stay fresh
+// without calling GitHub's rate-limited API on every visit.
+export const revalidate = 3600;
+
+const HomePage = async () => {
+  const github = await getGitHubStatsServerAction();
+  // Profile fields left empty on GitHub (or missing when the API call fails) get no card.
+  const statCards = [
+    { title: 'Hireable', value: github.hireable ? 'Yes' : null },
+    { title: 'Total Public Repositories', value: github.public_repos },
+    { title: 'Followers', value: github.followers },
+    { title: 'Following', value: github.following },
+    { title: 'Current Company', value: github.company },
+    { title: 'Location', value: github.location },
+  ].filter(
+    (card): card is { title: string; value: string | number } =>
+      card.value != null && card.value !== ''
+  );
+
   return (
     <>
-      <PageHeader>
-        <PageHeaderHeading>Baoxi Huang</PageHeaderHeading>
-        <PageHeaderHeading className="mt-2 text-muted-foreground">
-          A coder by day, problem-solver by night!
-        </PageHeaderHeading>
+      <PageHeader className="mb-4">
+        <PageHeaderHeading>GitHub Stats</PageHeaderHeading>
         <PageHeaderDescription>
-          I am a Machine Learning & Software Engineer who builds LLM-powered
-          systems end to end, from multi-agent support platforms with RAG,
-          memory and monitoring to dataset deduplication pipelines on AWS. I
-          studied machine learning at The University of Tokyo and have interned
-          as a Machine Learning Engineer at Preferred Networks and as a Software
-          Engineer at Money Forward.
+          Insights and metrics about my GitHub profile
         </PageHeaderDescription>
-        <PageActions>
-          <Button asChild size="sm" className="rounded-md">
-            <Link href={siteConfig.links.resume} target="_blank">
-              Get Resume
-              <ExternalLink className="size-3" strokeWidth={2} />
-            </Link>
-          </Button>
-          <Button asChild size="sm" variant="ghost" className="rounded-md">
-            <Link href={siteConfig.links.email}>
-              <Mail className="size-4" />
-              Send Mail
-            </Link>
-          </Button>
-        </PageActions>
       </PageHeader>
 
-      <Pager
-        prevHref="/"
-        nextHref="/about"
-        prevTitle="Previous"
-        nextTitle="About Me"
-      />
+      <div className="mb-6 flex w-full items-center justify-center rounded-xl border border-border/40 p-4">
+        <GitHubGraphs />
+      </div>
+
+      {statCards.length > 0 ? (
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+          {statCards.map((card) => (
+            <StatCard key={card.title} {...card} />
+          ))}
+        </div>
+      ) : (
+        <p className="text-muted-foreground">
+          GitHub profile numbers couldn’t be loaded. They refresh every hour.
+        </p>
+      )}
+
+      <PageHeader className="mt-16 mb-4">
+        <PageHeaderHeading>Footprint</PageHeaderHeading>
+        <PageHeaderDescription>Places I’ve been so far.</PageHeaderDescription>
+      </PageHeader>
+
+      <FootprintExplorer places={places} />
+
+      <Pager nextHref="/about" nextTitle="About Me" />
     </>
   );
 };
-export default IntroductionPage;
+export default HomePage;
+
+function StatCard({ title, value }: { title: string; value: string | number }) {
+  return (
+    <div
+      className={cn(
+        'h-full w-full rounded-xl border border-border/40 p-4 transition-transform duration-200 hover:scale-105 motion-reduce:transition-none motion-reduce:hover:scale-100',
+        title === 'Hireable' && 'bg-green-500/20'
+      )}
+    >
+      <h3 className="text-lg font-semibold tracking-tight text-muted-foreground">
+        {title}
+      </h3>
+      <span
+        className={cn(
+          'font-bold leading-tight tracking-tight',
+          // Numbers read best large; names and places would wrap at that size.
+          typeof value === 'number' ? 'text-5xl' : 'text-2xl'
+        )}
+      >
+        {value}
+      </span>
+    </div>
+  );
+}
