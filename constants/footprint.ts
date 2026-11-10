@@ -198,6 +198,50 @@ export const places: Place[] = [
     lng: 104.0659,
   },
   {
+    // A whole region: the marker sits on its capital, Ürümqi.
+    id: 'xinjiang',
+    name: 'Xinjiang',
+    country: 'China',
+    lat: 43.8244,
+    lng: 87.6139,
+  },
+  {
+    id: 'fuzhou',
+    name: 'Fuzhou',
+    country: 'China',
+    lat: 26.0775,
+    lng: 119.2918,
+  },
+  {
+    id: 'xiamen',
+    name: 'Xiamen',
+    country: 'China',
+    lat: 24.4801,
+    lng: 118.0853,
+  },
+  {
+    id: 'shantou',
+    name: 'Shantou',
+    country: 'China',
+    lat: 23.3564,
+    lng: 116.6776,
+  },
+  {
+    // Shunde and Nanhai are districts of Foshan, Guangdong.
+    id: 'shunde',
+    name: 'Shunde',
+    country: 'China',
+    lat: 22.8055,
+    lng: 113.2894,
+  },
+  {
+    id: 'nanhai',
+    name: 'Nanhai',
+    country: 'China',
+    lat: 23.0314,
+    lng: 113.1375,
+  },
+  {
     id: 'kuala-lumpur',
     name: 'Kuala Lumpur',
     country: 'Malaysia',
