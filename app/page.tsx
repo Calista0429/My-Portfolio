@@ -23,8 +23,6 @@ const HomePage = async () => {
     { title: 'Total Public Repositories', value: github.public_repos },
     { title: 'Followers', value: github.followers },
     { title: 'Following', value: github.following },
-    { title: 'Current Company', value: github.company },
-    { title: 'Location', value: github.location },
   ].filter(
     (card): card is { title: string; value: string | number } =>
       card.value != null && card.value !== ''
