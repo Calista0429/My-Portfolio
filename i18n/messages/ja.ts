@@ -1,12 +1,9 @@
 import type { Messages } from './en';
 
-// Japanese UI and page copy. Typed against the English messages, so a missing
-// or extra key fails the type check.
+// Japanese copy of every page. Typed against the English messages, so a
+// missing or extra key fails the type check.
 export const ja: Messages = {
-  locale: {
-    htmlLang: 'ja',
-    intl: 'ja-JP',
-  },
+  locale: { htmlLang: 'ja' },
   meta: {
     description:
       '機械学習エンジニア／ソフトウェアエンジニア、Baoxi Huangのポートフォリオです。LLMエージェント、RAGシステム、データパイプラインを開発しています。',
@@ -26,47 +23,8 @@ export const ja: Messages = {
     ],
     ogLocale: 'ja_JP',
   },
-  nav: {
-    home: 'ホーム',
-    linkedin: 'LinkedIn',
-    // The linked PDF is the English résumé.
-    resume: '英文レジュメ',
-    blog: 'ブログ',
-    sections: 'メニュー',
-    pages: {
-      about: 'プロフィール',
-      projects: 'プロジェクト',
-      skillsTools: 'スキル・ツール',
-      experience: '職務経験',
-      education: '学歴',
-    },
-    menu: 'ナビゲーションメニュー',
-  },
-  header: {
-    playMusic: '音楽を再生',
-    pauseMusic: '音楽を一時停止',
-    toggleTheme: 'テーマを切り替え',
-    github: 'GitHub',
-  },
-  search: {
-    button: 'ページを検索…',
-    buttonShort: '検索…',
-    placeholder: 'コマンドを入力、または検索…',
-    empty: '該当する結果はありません。',
-    links: 'リンク',
-    theme: 'テーマ',
-    light: 'ライト',
-    dark: 'ダーク',
-    system: 'システム設定',
-    dialogTitle: 'コマンドパレット',
-    dialogDescription: '実行するコマンドを検索します',
-  },
-  common: {
-    close: '閉じる',
-    latest: '最新',
-  },
-  footer: { credit: '制作：' },
-  intro: { label: 'オープニングアニメーション', skip: 'スキップ' },
+  // Badge on the newest timeline entry (Experience, Education).
+  timeline: { latest: '最新' },
   loading: {
     title: '読み込み中…',
     description: 'データを取得しています…',

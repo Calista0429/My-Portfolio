@@ -1,13 +1,10 @@
-// English UI and page copy. Every string here is currently hard-coded in the
-// components (copied verbatim); a language toggle should read from here and
-// from ./ja.ts instead. Content data (projects, experience, education, places)
-// keeps its translations next to the English: see ../README.md.
+// English copy of every page, copied verbatim from where it is hard-coded
+// today; a language toggle should read from here and from ./ja.ts instead.
+// Site chrome (sidebar, header, mobile menu, search, footer, pagers, intro)
+// stays in English and is not here. Content data (projects, experience,
+// education, places) keeps its translations next to the English: see ../README.md.
 export const en = {
-  locale: {
-    htmlLang: 'en',
-    // Intl locale for the header clock.
-    intl: 'en-US',
-  },
+  locale: { htmlLang: 'en' },
   meta: {
     description:
       'Portfolio of Baoxi Huang, Machine Learning & Software Engineer building LLM agents, RAG systems and data pipelines.',
@@ -33,51 +30,8 @@ export const en = {
     ],
     ogLocale: 'en_US',
   },
-  nav: {
-    home: 'Home',
-    linkedin: 'LinkedIn',
-    resume: 'Resume',
-    blog: 'Blog',
-    // Sidebar heading and page names (sidebar, mobile menu, search, pagers).
-    sections: 'Sections',
-    pages: {
-      about: 'About Me',
-      projects: 'Projects',
-      skillsTools: 'Skills & Tools',
-      experience: 'Experience',
-      education: 'Education',
-    },
-    // Screen-reader title of the mobile menu.
-    menu: 'Navigation Menu',
-  },
-  header: {
-    playMusic: 'Play Music',
-    pauseMusic: 'Pause Music',
-    toggleTheme: 'Toggle theme',
-    github: 'GitHub',
-  },
-  search: {
-    button: 'Search sections...',
-    buttonShort: 'Search...',
-    placeholder: 'Type a command or search...',
-    empty: 'No results found.',
-    links: 'Links',
-    theme: 'Theme',
-    light: 'Light',
-    dark: 'Dark',
-    system: 'System',
-    dialogTitle: 'Command Palette',
-    dialogDescription: 'Search for a command to run...',
-  },
-  common: {
-    close: 'Close',
-    // Badge on the newest timeline entry.
-    latest: 'Latest',
-  },
-  // Rendered as "©2026 · {credit}{name link}".
-  footer: { credit: 'Developed by ' },
-  // Overlay label and skip button of the homepage intro (mount-preloader.js).
-  intro: { label: 'Intro animation', skip: 'Skip intro' },
+  // Badge on the newest timeline entry (Experience, Education).
+  timeline: { latest: 'Latest' },
   loading: {
     title: 'Loading...',
     description: 'Getting data from various sources...',
