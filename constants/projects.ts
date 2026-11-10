@@ -264,7 +264,7 @@ export const projects: Project[] = [
       "A travel-planning agent that grounds every itinerary in real map data, budgets and party size, and returns a structured, auditable plan.",
     cover: {
       src: tripPlannerCover,
-      alt: "Diagram of the trip planner's post-training loop: SFT learns the plan structure, DPO learns preferences, and reranking picks the answer",
+      alt: "The trip planner's daily maps for a three-day Hangzhou trip: one map per day, with the route linking that day's stay, sights and meals",
     },
     overview:
       "HelloAgents Trip Planner is an intelligent travel assistant for real-world trip planning. The FastAPI backend compiles the user's request, party size, budget, accommodation, weather, attractions, hotels, food and price hints from Amap (Gaode Maps) into an auditable PlannerContext, and the Planner model generates a structured TripPlan JSON within those constraints. The repository also keeps the post-training data and evaluation conventions behind the Planner, plus optional RAG retrieval and a critic reflection loop.",
@@ -307,7 +307,7 @@ export const projects: Project[] = [
       tagline:
         "すべての旅程を実際の地図データ・予算・人数に基づいて作成し、検証可能な構造化プランを返す旅行計画エージェントです。",
       coverAlt:
-        "Trip Plannerのポストトレーニングの流れを示す図：SFTでプランの構造を、DPOで好みを学習し、リランキングで回答を選ぶ",
+        "Trip Plannerの日別マップ：3日間の杭州旅行を1日1枚の地図で示し、その日の宿泊先・観光地・食事をルートで結んでいる",
       overview:
         "HelloAgents Trip Plannerは、実際の旅行計画のためのインテリジェントな旅行アシスタントです。FastAPIのバックエンドが、ユーザーの要望、人数、予算、宿泊、天気、観光地、ホテル、食事、そして高徳地図（Amap）から得た価格の目安を、検証可能なPlannerContextにまとめます。Plannerモデルはその制約の範囲内で、構造化されたTripPlan JSONを生成します。リポジトリには、Plannerを支えるポストトレーニング用のデータと評価の規約に加え、オプションのRAG検索とクリティックによるリフレクションループも含まれています。",
       features: [
