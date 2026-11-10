@@ -94,6 +94,11 @@ const AboutMePage = () => {
       <Section title="Publication & certification">
         <Rows rows={records} />
       </Section>
+      <Section title="Hobbies">
+        <p className="mt-0! text-sm text-muted-foreground sm:text-base">
+          Photography, Gym, Swimming, Jogging, Cooking, Reading
+        </p>
+      </Section>
 
       <Pager nextHref="/projects" nextTitle="Projects" />
     </>
