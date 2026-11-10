@@ -8,25 +8,34 @@ import {
   PageHeaderHeading,
 } from '@/components/page-header';
 import Pager from '@/components/pager';
-import { places } from '@/constants/footprint';
+import { localizePlaces } from '@/constants/footprint';
+import { messages, toLocale } from '@/i18n';
 import { cn } from '@/lib/utils';
 
 // Rebuild the page at most once an hour, so the GitHub numbers stay fresh
 // without calling GitHub's rate-limited API on every visit.
 export const revalidate = 3600;
 
-const HomePage = async () => {
+const HomePage = async ({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) => {
+  const locale = toLocale((await params).locale);
+  const { home, footprint } = messages[locale];
   const github = await getGitHubStatsServerAction();
   // Profile fields left empty on GitHub (or missing when the API call fails) get no card.
   const statCards = [
-    { title: 'Hireable', value: github.hireable ? 'Yes' : null },
-    { title: 'Total Public Repositories', value: github.public_repos },
-    { title: 'Followers', value: github.followers },
-    { title: 'Following', value: github.following },
+    { title: home.github.hireable, value: github.hireable ? home.github.yes : null, highlight: true },
+    { title: home.github.repos, value: github.public_repos, highlight: false },
+    { title: home.github.followers, value: github.followers, highlight: false },
+    { title: home.github.following, value: github.following, highlight: false },
   ].filter(
-    (card): card is { title: string; value: string | number } =>
+    (card): card is { title: string; value: string | number; highlight: boolean } =>
       card.value != null && card.value !== ''
   );
+  const places = localizePlaces(locale);
+  const countryCount = new Set(places.map((place) => place.country)).size;
 
   return (
     <>
@@ -34,14 +43,15 @@ const HomePage = async () => {
       <HomePreloader />
 
       <PageHeader className="mb-4">
-        <PageHeaderHeading>GitHub Stats</PageHeaderHeading>
-        <PageHeaderDescription>
-          Insights and metrics about my GitHub profile
-        </PageHeaderDescription>
+        <PageHeaderHeading>{home.github.title}</PageHeaderHeading>
+        <PageHeaderDescription>{home.github.description}</PageHeaderDescription>
       </PageHeader>
 
       <div className="mb-6 flex w-full items-center justify-center rounded-xl border border-border/40 p-4">
-        <GitHubGraphs />
+        <GitHubGraphs
+          labels={home.github.calendar}
+          errorMessage={home.github.calendarError}
+        />
       </div>
 
       {statCards.length > 0 ? (
@@ -51,17 +61,23 @@ const HomePage = async () => {
           ))}
         </div>
       ) : (
-        <p className="text-muted-foreground">
-          GitHub profile numbers couldn’t be loaded. They refresh every hour.
-        </p>
+        <p className="text-muted-foreground">{home.github.unavailable}</p>
       )}
 
       <PageHeader className="mt-16 mb-4">
-        <PageHeaderHeading>Footprint</PageHeaderHeading>
-        <PageHeaderDescription>Places I’ve been so far.</PageHeaderDescription>
+        <PageHeaderHeading>{home.footprint.title}</PageHeaderHeading>
+        <PageHeaderDescription>{home.footprint.description}</PageHeaderDescription>
       </PageHeader>
 
-      <FootprintExplorer places={places} />
+      <FootprintExplorer
+        places={places}
+        labels={{
+          places: footprint.places,
+          summary: footprint.summary(places.length, countryCount),
+          allPlaces: footprint.allPlaces,
+          mapLabel: footprint.mapLabel,
+        }}
+      />
 
       <Pager nextHref="/about" nextTitle="About Me" />
     </>
@@ -69,12 +85,20 @@ const HomePage = async () => {
 };
 export default HomePage;
 
-function StatCard({ title, value }: { title: string; value: string | number }) {
+function StatCard({
+  title,
+  value,
+  highlight,
+}: {
+  title: string;
+  value: string | number;
+  highlight: boolean;
+}) {
   return (
     <div
       className={cn(
         'h-full w-full rounded-xl border border-border/40 p-4 transition-transform duration-200 hover:scale-105 motion-reduce:transition-none motion-reduce:hover:scale-100',
-        title === 'Hireable' && 'bg-green-500/20'
+        highlight && 'bg-green-500/20'
       )}
     >
       <h3 className="text-lg font-semibold tracking-tight text-muted-foreground">

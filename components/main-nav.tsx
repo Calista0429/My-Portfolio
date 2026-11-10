@@ -4,16 +4,18 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 import { siteConfig } from "@/config/site";
+import { localeFromPathname, localizePath, stripLocale } from "@/i18n/routing";
 import { cn } from "@/lib/utils";
 import { ExternalLink } from "lucide-react";
 import { Icons } from "./icons";
 
 export function MainNav() {
   const pathname = usePathname();
+  const home = localizePath("/", localeFromPathname(pathname));
 
   return (
     <div className="mr-4 hidden md:flex">
-      <Link href="/" className="mr-6 flex items-center gap-2.5">
+      <Link href={home} className="mr-6 flex items-center gap-2.5">
         <Icons.logo className="h-6 w-6" />
         <span className="hidden font-semibold tracking-tight lg:inline-block">
           {siteConfig.name}
@@ -21,10 +23,10 @@ export function MainNav() {
       </Link>
       <nav className="flex items-center gap-6 text-sm">
         <Link
-          href="/"
+          href={home}
           className={cn(
             "transition-colors hover:text-foreground",
-            pathname === "/"
+            stripLocale(pathname) === "/"
               ? "font-medium text-foreground"
               : "text-muted-foreground"
           )}

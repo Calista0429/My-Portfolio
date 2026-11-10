@@ -2,48 +2,39 @@ import profilePhoto from '@/assets/profile.jpg';
 import { PageHeader, PageHeaderHeading } from '@/components/page-header';
 import Pager from '@/components/pager';
 import { siteConfig } from '@/config/site';
+import { messages, toLocale } from '@/i18n';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Fragment, type ReactNode } from 'react';
 
 const contacts = [
-  { label: 'Email', href: siteConfig.links.email },
-  { label: 'GitHub', href: siteConfig.links.githubProfile },
-  { label: 'LinkedIn', href: siteConfig.links.linkedin },
-  { label: 'Blog', href: siteConfig.links.blog },
-];
+  { key: 'email', href: siteConfig.links.email },
+  { key: 'github', href: siteConfig.links.githubProfile },
+  { key: 'linkedin', href: siteConfig.links.linkedin },
+  { key: 'blog', href: siteConfig.links.blog },
+] as const;
 
-const languages: [string, ReactNode][] = [
-  ['English', 'TOEFL 91'],
-  ['Japanese', 'JLPT N2'],
-  ['Chinese', 'Native'],
-];
-
-const skills: [string, ReactNode][] = [
-  ['Programming', 'Python, TypeScript'],
-  ['ML & LLM', 'PyTorch, RAG, multi-agent systems, LLM-as-Judge evaluation'],
-  ['Backend', 'FastAPI, Node.js, GraphQL, Redis, ChromaDB'],
-  ['Frontend', 'React'],
-  ['Cloud & DevOps', 'AWS (S3, Batch, EC2), Docker, Prometheus, GitHub Actions, Git'],
-];
-
-const records: [string, ReactNode][] = [
-  [
-    'Publication',
-    <TextLink
-      key="paper"
-      href="https://www.sciencedirect.com/science/article/pii/S0025326X25001857"
-    >
-      Seafloor Debris Detection Using Underwater Images and Deep
-      Learning-Driven Image Restoration
-    </TextLink>,
-  ],
-  ['Certification', 'AWS Certified Solutions Architect – Associate'],
-];
+const paperUrl =
+  'https://www.sciencedirect.com/science/article/pii/S0025326X25001857';
 
 // globals.css styles h1–h6 and p outside any CSS layer, which beats Tailwind
 // utilities, so classes that restyle those tags here need `!`.
-const AboutMePage = () => {
+const AboutMePage = async ({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) => {
+  const { about } = messages[toLocale((await params).locale)];
+  const records: [string, ReactNode][] = [
+    [
+      about.publication.label,
+      <TextLink key="paper" href={paperUrl}>
+        {about.publication.title}
+      </TextLink>,
+    ],
+    [about.certification.label, about.certification.value],
+  ];
+
   return (
     <>
       <PageHeader className="pb-8">
@@ -53,7 +44,7 @@ const AboutMePage = () => {
           <div>
             <PageHeaderHeading>Baoxi Huang</PageHeaderHeading>
             <p className="mt-2! text-base text-muted-foreground sm:text-lg">
-              Machine Learning & Software Engineer
+              {about.role}
             </p>
           </div>
           <Image
@@ -65,9 +56,9 @@ const AboutMePage = () => {
             priority
           />
           <dl className="col-span-2 mt-4 grid grid-cols-[max-content_minmax(0,1fr)] gap-x-3 gap-y-1 text-sm sm:text-base lg:col-span-1">
-            {contacts.map(({ label, href }) => (
-              <Fragment key={label}>
-                <dt>{label}</dt>
+            {contacts.map(({ key, href }) => (
+              <Fragment key={key}>
+                <dt>{about.contacts[key]}</dt>
                 <dd className="wrap-anywhere text-muted-foreground">
                   <Link
                     href={href}
@@ -85,18 +76,18 @@ const AboutMePage = () => {
         </div>
       </PageHeader>
 
-      <Section title="Language">
-        <Rows rows={languages} />
+      <Section title={about.sections.language}>
+        <Rows rows={about.languages} />
       </Section>
-      <Section title="Skills">
-        <Rows rows={skills} />
+      <Section title={about.sections.skills}>
+        <Rows rows={about.skills} />
       </Section>
-      <Section title="Publication & certification">
+      <Section title={about.sections.records}>
         <Rows rows={records} />
       </Section>
-      <Section title="Hobbies">
+      <Section title={about.sections.hobbies}>
         <p className="mt-0! text-sm text-muted-foreground sm:text-base">
-          Photography, Gym, Swimming, Jogging, Cooking, Reading
+          {about.hobbies}
         </p>
       </Section>
 

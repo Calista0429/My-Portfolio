@@ -11,6 +11,7 @@ import { MainNav } from "./main-nav";
 import { MobileNav } from "./mobile-nav";
 import { CommandMenu } from "./command-menu";
 import { Icons } from "./icons";
+import { LanguageToggle } from "./language-toggle";
 
 export function SiteHeader() {
   const [playing, setPlaying] = useState(false);
@@ -72,6 +73,9 @@ export function SiteHeader() {
                 {formattedTime}
               </span>
             </div>
+
+            {/* EN / JP */}
+            <LanguageToggle />
 
             {/* Action Buttons */}
             <div className="flex items-center gap-1">

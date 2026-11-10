@@ -6,6 +6,7 @@ import { ChevronLeft } from "lucide-react";
 import { Button } from "./ui/button";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { localeFromPathname, localizePath } from "@/i18n/routing";
 
 const Pager = ({
   prevHref,
@@ -19,11 +20,14 @@ const Pager = ({
   nextTitle: string;
 }) => {
   const pathname = usePathname();
+  // Page names stay English; the links stay in the current language.
+  const locale = localeFromPathname(pathname);
+  const prev = prevHref && localizePath(prevHref, locale);
   return (
     <div className="flex flex-row items-center justify-between w-full mt-8">
-      {prevHref && prevHref !== pathname && (
+      {prev && prev !== pathname && (
         <Button variant="ghost" asChild>
-          <Link href={prevHref}>
+          <Link href={prev}>
             <ChevronLeft />
             {prevTitle}
           </Link>
@@ -31,7 +35,7 @@ const Pager = ({
       )}
 
       <Button variant="ghost" className="ml-auto" asChild>
-        <Link href={nextHref}>
+        <Link href={localizePath(nextHref, locale)}>
           {nextTitle}
           <ChevronRight />
         </Link>

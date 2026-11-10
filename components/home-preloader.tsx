@@ -7,6 +7,7 @@ import {
   mountPixelPreloader,
   type PixelPreloader,
 } from '@/components/pixel-preloader/mount-preloader';
+import { stripLocale } from '@/i18n/routing';
 import { useTheme } from 'next-themes';
 import { useEffect, useState } from 'react';
 
@@ -23,14 +24,14 @@ const SAFETY_TIMEOUT_MS = 12000;
 let played = false;
 let mountedCount = 0;
 
-// True when the document itself was loaded at "/", rather than the visitor
-// arriving at the homepage from another page of the site.
+// True when the document itself was loaded at the homepage ("/" or "/ja"),
+// rather than the visitor arriving there from another page of the site.
 function isFullLoadOfHome() {
   const [navigation] = performance.getEntriesByType('navigation');
   const firstPath = navigation
     ? new URL(navigation.name).pathname
     : window.location.pathname;
-  return firstPath === '/';
+  return stripLocale(firstPath) === '/';
 }
 
 function startIntro(theme: 'light' | 'dark'): PixelPreloader | null {

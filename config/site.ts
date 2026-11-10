@@ -1,28 +1,6 @@
 export const siteConfig = {
   name: 'Baoxi Huang',
   url: 'https://calista0429.vercel.app',
-  description:
-    'Portfolio of Baoxi Huang, Machine Learning & Software Engineer building LLM agents, RAG systems and data pipelines.',
-  keywords: [
-    'Baoxi Huang',
-    'baoxi huang',
-    'Huang Baoxi',
-    'Calista0429',
-    'Baoxi Huang Portfolio',
-    'Machine Learning Engineer',
-    'Software Engineer',
-    'LLM',
-    'RAG',
-    'AI Agents',
-    'Python Developer',
-    'React Developer',
-    'Baoxi Huang Projects',
-    'Baoxi Huang Skills',
-    'Baoxi Huang Experience',
-    'Baoxi Huang Education',
-    'Baoxi Huang Contact',
-    'Baoxi Huang Resume',
-  ],
   links: {
     shadcn: 'https://ui.shadcn.com/',
     github: 'https://github.com/Calista0429',

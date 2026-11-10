@@ -1,4 +1,5 @@
-import { projects } from '@/constants/projects';
+import { localizeProject, projects } from '@/constants/projects';
+import { localizePath, messages, toLocale } from '@/i18n';
 import {
   PageHeader,
   PageHeaderDescription,
@@ -18,37 +19,42 @@ const getProject = async (slug: string) => {
 const ProjectDetails = async ({
   params,
 }: {
-  params: Promise<{ id: string }>;
+  params: Promise<{ locale: string; id: string }>;
 }) => {
-  const { id } = await params;
-  const project = await getProject(id);
+  const { locale: localeParam, id } = await params;
+  const locale = toLocale(localeParam);
+  const text = messages[locale].project;
+  const projectsHref = localizePath('/projects', locale);
+  const found = await getProject(id);
 
   // await new Promise((resolve) => setTimeout(resolve, 1000));
 
-  if (!project) {
+  if (!found) {
     return (
       <>
-        <h2 className="text-destructive">Project not found</h2>
+        <h2 className="text-destructive">{text.notFound}</h2>
         <Link
-          href="/projects"
+          href={projectsHref}
           className="text-muted-foreground flex items-center gap-2"
         >
           <ArrowLeftIcon className="w-4 h-4" />
-          Back to projects
+          {text.back}
         </Link>
       </>
     );
   }
 
+  const project = localizeProject(found, locale);
+
   return (
     <div>
       <div className="navigation">
         <Link
-          href="/projects"
+          href={projectsHref}
           className="flex items-center gap-2 mb-4 text-muted-foreground cursor-pointer w-fit"
         >
           <ArrowLeftIcon className="w-4 h-4" />
-          Back to projects
+          {text.back}
         </Link>
       </div>
 
@@ -67,7 +73,7 @@ const ProjectDetails = async ({
       </PageHeader>
 
       <div id="badges" className="my-4">
-        <h2 className="text-lg font-semibold">Tech Stack</h2>
+        <h2 className="text-lg font-semibold">{text.techStack}</h2>
         <div className="flex flex-wrap items-center gap-2">
           {project.techStack?.map((tech) => (
             <Badge
@@ -83,7 +89,7 @@ const ProjectDetails = async ({
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 font-light">
         <div id="features" className="my-4">
-          <h2 className="text-lg font-semibold">Features</h2>
+          <h2 className="text-lg font-semibold">{text.features}</h2>
           <ul className="list-disc list-outside">
             {project.features?.map((feature) => (
               <li className="ml-4 pl-2" key={feature}>
@@ -94,7 +100,7 @@ const ProjectDetails = async ({
         </div>
 
         <div id="challenges" className="my-4">
-          <h2 className="text-lg font-semibold">Challenges</h2>
+          <h2 className="text-lg font-semibold">{text.challenges}</h2>
           <ul className="list-disc list-outside">
             {project.challenges?.map((challenge) => (
               <li className="ml-4 pl-2" key={challenge}>
@@ -105,7 +111,7 @@ const ProjectDetails = async ({
         </div>
 
         <div id="learnings" className="my-4">
-          <h2 className="text-lg font-semibold">Learnings</h2>
+          <h2 className="text-lg font-semibold">{text.learnings}</h2>
           <ul className="list-disc list-outside ">
             {project.learnings?.map((learning) => (
               <li className="ml-4 pl-2" key={learning}>
@@ -117,9 +123,9 @@ const ProjectDetails = async ({
 
         {project.feedback && (
           <div id="feedback" className="my-4">
-            <h2 className="text-lg font-semibold">Feedback</h2>
+            <h2 className="text-lg font-semibold">{text.feedback}</h2>
             <p>
-              For feedback or suggestions, contact me at:{' '}
+              {text.feedbackPrompt}{' '}
               <Link href={siteConfig.links.email}>
                 <span className="text-primary">
                   {siteConfig.links.email.replace('mailto:', '')}
@@ -132,14 +138,14 @@ const ProjectDetails = async ({
         {project.links && (
           <div id="links" className="my-4">
             <h2 className="text-lg font-semibold">
-              {project.links.live && project.links.github ? 'Links' : 'Link'}
+              {project.links.live && project.links.github ? text.links : text.link}
             </h2>
 
             <div className="flex flex-wrap items-center gap-2">
               {project.links.live && (
                 <Link href={project.links.live} target="_blank">
                   <Badge variant="default" className="px-4 text-base">
-                    Live <ExternalLinkIcon className="w-4 h-4 -mt-2" />
+                    {text.live} <ExternalLinkIcon className="w-4 h-4 -mt-2" />
                   </Badge>
                 </Link>
               )}
@@ -147,7 +153,7 @@ const ProjectDetails = async ({
               {project.links.github && (
                 <Link href={project.links.github} target="_blank">
                   <Badge variant="outline" className="px-4 text-base">
-                    Github <ExternalLinkIcon className="w-4 h-4 -mt-2" />
+                    {text.github} <ExternalLinkIcon className="w-4 h-4 -mt-2" />
                   </Badge>
                 </Link>
               )}

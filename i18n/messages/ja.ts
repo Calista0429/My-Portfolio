@@ -25,16 +25,11 @@ export const ja: Messages = {
   },
   // Badge on the newest timeline entry (Experience, Education).
   timeline: { latest: '最新' },
-  loading: {
-    title: '読み込み中…',
-    description: 'データを取得しています…',
-    hint: '数秒かかる場合があります…',
-  },
   notFound: { title: 'ページが見つかりません' },
   home: {
     github: {
-      title: 'GitHubアクティビティ',
-      description: 'GitHubでの活動と各種データです。',
+      title: 'GitHubの活動',
+      description: 'コントリビューションの推移と、プロフィールの各種データです。',
       hireable: '求職状況',
       yes: '求職中',
       repos: '公開リポジトリ数',

@@ -1,5 +1,7 @@
 import type { StaticImageData } from "next/image";
 
+import type { Locale } from "@/i18n/routing";
+
 import employeeOnboardingCover from "@/assets/projects/employee-onboarding-agent.png";
 import finetunedBertCover from "@/assets/projects/finetuned-bert-chinese-qa.png";
 import lshbloomCover from "@/assets/projects/lshbloom-pes2o.png";
@@ -400,3 +402,16 @@ export const projects: Project[] = [
     },
   },
 ];
+
+/** The project in the given language, with its cover alt text translated too. */
+export function localizeProject(project: Project, locale: Locale): Project {
+  if (locale === "en") return project;
+  const { coverAlt, ...text } = project.ja;
+  return {
+    ...project,
+    ...text,
+    ...(project.cover && {
+      cover: { ...project.cover, alt: coverAlt ?? project.cover.alt },
+    }),
+  };
+}

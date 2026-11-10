@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { localeFromPathname, localizePath } from '@/i18n/routing';
 import { cn } from '@/lib/utils';
 
 export function SideNav({ config }: any) {
@@ -37,17 +38,19 @@ function DocsNavItems({
   items: any;
   pathname: string | null;
 }) {
+  // Labels stay English; links go to the page in the current language.
+  const locale = localeFromPathname(pathname ?? '/');
   return items?.length ? (
     <div className="grid grid-flow-row auto-rows-max gap-0.5 text-sm">
       {items.map((item: any, index: any) =>
         item.href && !item.disabled ? (
           <Link
             key={index}
-            href={item.href}
+            href={item.external ? item.href : localizePath(item.href, locale)}
             className={cn(
               'group relative flex h-8 w-full items-center rounded-lg px-2 after:absolute after:inset-x-0 after:inset-y-[-2px]  after:rounded-lg hover:bg-accent hover:text-accent-foreground ',
               item.disabled && 'cursor-not-allowed opacity-60',
-              pathname === item.href
+              pathname === localizePath(item.href, locale)
                 ? 'bg-accent font-medium text-accent-foreground'
                 : 'font-normal text-foreground'
             )}

@@ -1,12 +1,13 @@
 "use client";
 
 import * as React from "react";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { type DialogProps } from "@radix-ui/react-dialog";
 import { Circle, File, Laptop, Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
  
 import { docsConfig } from "@/config/docs";
+import { localeFromPathname, localizePath } from "@/i18n/routing";
 import { cn } from "@/lib/utils";
 import {
   CommandDialog,
@@ -23,6 +24,7 @@ export function CommandMenu({ ...props }: DialogProps) {
   const router = useRouter();
   const [open, setOpen] = React.useState(false);
   const { setTheme } = useTheme();
+  const locale = localeFromPathname(usePathname());
 
   React.useEffect(() => {
     const down = (e: KeyboardEvent) => {
@@ -78,7 +80,7 @@ export function CommandMenu({ ...props }: DialogProps) {
                   key={navItem.href}
                   value={navItem.title}
                   onSelect={() => {
-                    runCommand(() => router.push(navItem.href as string));
+                    runCommand(() => router.push(localizePath(navItem.href as string, locale)));
                   }}
                 >
                   <File className="mr-2 h-4 w-4" />
@@ -93,7 +95,7 @@ export function CommandMenu({ ...props }: DialogProps) {
                   key={navItem.href}
                   value={navItem.title}
                   onSelect={() => {
-                    runCommand(() => router.push(navItem.href as string));
+                    runCommand(() => router.push(localizePath(navItem.href as string, locale)));
                   }}
                 >
                   <div className="mr-2 flex h-4 w-4 items-center justify-center">

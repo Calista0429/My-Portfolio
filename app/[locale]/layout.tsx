@@ -10,59 +10,73 @@ import { fontSans, fontMono } from '@/lib/fonts';
 import { Toaster } from '@/components/ui/sonner';
 
 import { Metadata, Viewport } from 'next';
-import './globals.css';
+import '../globals.css';
 import { cn } from '@/lib/utils';
 import { SiteHeader } from '@/components/site-header';
 import { SideNav } from '@/components/side-nav';
 import { SiteFooter } from '@/components/site-footer';
 import { docsConfig } from '@/config/docs';
+import { locales, messages, toLocale } from '@/i18n';
+import { LocaleTextProvider } from '@/components/locale-text';
 
 import { SpeedInsights } from '@vercel/speed-insights/next';
 
-export const metadata: Metadata = {
-  title: siteConfig.name,
-  description: siteConfig.description,
-  metadataBase: new URL(siteConfig.url),
-  keywords: siteConfig.keywords,
-  authors: [
-    {
-      name: 'Baoxi Huang',
+// Both languages are prerendered: /about (English, via middleware.ts) and /ja/about.
+export function generateStaticParams() {
+  return locales.map((locale) => ({ locale }));
+}
+
+type LayoutParams = { params: Promise<{ locale: string }> };
+
+export async function generateMetadata({
+  params,
+}: LayoutParams): Promise<Metadata> {
+  const { meta } = messages[toLocale((await params).locale)];
+  return {
+    title: siteConfig.name,
+    description: meta.description,
+    metadataBase: new URL(siteConfig.url),
+    keywords: meta.keywords,
+    authors: [
+      {
+        name: 'Baoxi Huang',
+        url: siteConfig.url,
+      },
+    ],
+    creator: 'Baoxi Huang',
+    openGraph: {
+      type: 'website',
+      locale: meta.ogLocale,
       url: siteConfig.url,
+      title: siteConfig.name,
+      description: meta.description,
+      siteName: siteConfig.name,
     },
-  ],
-  creator: 'Baoxi Huang',
-  openGraph: {
-    type: 'website',
-    locale: 'en_US',
-    url: siteConfig.url,
-    title: siteConfig.name,
-    description: siteConfig.description,
-    siteName: siteConfig.name,
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: siteConfig.name,
-    description: siteConfig.description,
-  },
-  icons: {
-    icon: '/favicon.ico',
-    shortcut: '/favicon-16x16.png',
-    apple: '/apple-touch-icon.png',
-  },
-};
+    twitter: {
+      card: 'summary_large_image',
+      title: siteConfig.name,
+      description: meta.description,
+    },
+    icons: {
+      icon: '/favicon.ico',
+      shortcut: '/favicon-16x16.png',
+      apple: '/apple-touch-icon.png',
+    },
+  };
+}
 
 export const viewport: Viewport = {
   themeColor: META_THEME_COLORS.light,
 };
 
-interface RootLayoutProps {
-  children: React.ReactNode;
-}
-
-export default function RootLayout({ children }: RootLayoutProps) {
+export default async function RootLayout({
+  children,
+  params,
+}: LayoutParams & { children: React.ReactNode }) {
+  const locale = toLocale((await params).locale);
   return (
     <>
-      <html lang="en" suppressHydrationWarning>
+      <html lang={locale} suppressHydrationWarning>
         <head>
           <script
             dangerouslySetInnerHTML={{
@@ -107,7 +121,11 @@ export default function RootLayout({ children }: RootLayoutProps) {
                             </div>
                           </aside>
                           <div className="flex flex-col flex-1 py-6 pr-4 lg:py-8">
-                            {children}
+                            <LocaleTextProvider
+                              value={{ notFound: messages[locale].notFound }}
+                            >
+                              {children}
+                            </LocaleTextProvider>
                           </div>
                         </div>
                       </div>

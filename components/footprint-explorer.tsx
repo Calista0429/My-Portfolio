@@ -1,14 +1,29 @@
 'use client';
 
 import { FootprintMap } from '@/components/footprint-map';
-import type { Place } from '@/constants/footprint';
+import type { LocalizedPlace } from '@/constants/footprint';
 import { ArrowLeftIcon, ExternalLinkIcon } from 'lucide-react';
 import Link from 'next/link';
 import { useState } from 'react';
 
+// Text for the panel and map, in the page's language.
+export type FootprintLabels = {
+  places: string;
+  /** e.g. "34 places in 5 countries" */
+  summary: string;
+  allPlaces: string;
+  mapLabel: string;
+};
+
 // The map plus a side panel that lists every place by country, or shows the
 // one picked on the map or in the list.
-export function FootprintExplorer({ places }: { places: Place[] }) {
+export function FootprintExplorer({
+  places,
+  labels,
+}: {
+  places: LocalizedPlace[];
+  labels: FootprintLabels;
+}) {
   const [selectedId, setSelectedId] = useState<string | null>(null);
   // Where keyboard focus goes back to after leaving a place's details.
   const [returnFocusId, setReturnFocusId] = useState<string | null>(null);
@@ -26,20 +41,22 @@ export function FootprintExplorer({ places }: { places: Place[] }) {
         places={places}
         selectedId={selectedId}
         onSelect={select}
+        label={labels.mapLabel}
         className="h-[360px] sm:h-[460px]"
       />
       <aside className="rounded-xl border p-4 xl:h-[460px] xl:overflow-y-auto">
         {selected ? (
-          <PlaceDetails place={selected} onBack={() => select(null)} />
+          <PlaceDetails
+            place={selected}
+            backLabel={labels.allPlaces}
+            onBack={() => select(null)}
+          />
         ) : (
           <>
             <h2 className="mb-1! text-sm! font-semibold uppercase tracking-wide!">
-              Places
+              {labels.places}
             </h2>
-            <div className="text-sm text-muted-foreground">
-              {plural(places.length, 'place', 'places')} in{' '}
-              {plural(countries.length, 'country', 'countries')}
-            </div>
+            <div className="text-sm text-muted-foreground">{labels.summary}</div>
             {countries.map(({ country, places: inCountry }) => (
               <div key={country} className="mt-4">
                 <h3 className="mb-1! flex justify-between text-xs! font-medium! tracking-normal! text-muted-foreground">
@@ -74,7 +91,15 @@ export function FootprintExplorer({ places }: { places: Place[] }) {
   );
 }
 
-function PlaceDetails({ place, onBack }: { place: Place; onBack: () => void }) {
+function PlaceDetails({
+  place,
+  backLabel,
+  onBack,
+}: {
+  place: LocalizedPlace;
+  backLabel: string;
+  onBack: () => void;
+}) {
   return (
     <div className="text-sm">
       <button
@@ -84,7 +109,7 @@ function PlaceDetails({ place, onBack }: { place: Place; onBack: () => void }) {
         className="mb-4 inline-flex items-center gap-1 rounded-md text-muted-foreground transition-colors outline-none hover:text-foreground focus-visible:ring-[3px] focus-visible:ring-ring/50"
       >
         <ArrowLeftIcon className="size-4" />
-        All places
+        {backLabel}
       </button>
       <h2 className="mb-1!">{place.name}</h2>
       {place.country !== place.name && (
@@ -110,8 +135,8 @@ function PlaceDetails({ place, onBack }: { place: Place; onBack: () => void }) {
 }
 
 // Countries in the order they first appear in the data, each with its places.
-function groupByCountry(places: Place[]) {
-  const groups = new Map<string, Place[]>();
+function groupByCountry(places: LocalizedPlace[]) {
+  const groups = new Map<string, LocalizedPlace[]>();
   for (const place of places) {
     groups.set(place.country, [...(groups.get(place.country) ?? []), place]);
   }
@@ -119,8 +144,4 @@ function groupByCountry(places: Place[]) {
     country,
     places: inCountry,
   }));
-}
-
-function plural(count: number, one: string, many: string) {
-  return `${count} ${count === 1 ? one : many}`;
 }

@@ -1,6 +1,12 @@
 import { TimelineViewerData } from '@/types/TimelineViewer.types';
 
-const TimelineViewer = ({ data }: { data: TimelineViewerData[] }) => {
+const TimelineViewer = ({
+  data,
+  latestLabel,
+}: {
+  data: TimelineViewerData[];
+  latestLabel: string;
+}) => {
   return (
     <ol className="relative mb-10 border-gray-200 border-s dark:border-gray-700">
       {data.map((item, index) => {
@@ -21,8 +27,8 @@ const TimelineViewer = ({ data }: { data: TimelineViewerData[] }) => {
             <h3 className="flex items-center mb-1 text-lg font-semibold text-gray-900 dark:text-white">
               {item.title}
               {item.latest && (
-                <span className="bg-blue-100 text-blue-800 text-sm font-medium me-2 px-2.5 py-0.5 rounded-sm dark:bg-blue-900 dark:text-blue-300 ms-3">
-                  Latest
+                <span className="shrink-0 whitespace-nowrap bg-blue-100 text-blue-800 text-sm font-medium me-2 px-2.5 py-0.5 rounded-sm dark:bg-blue-900 dark:text-blue-300 ms-3">
+                  {latestLabel}
                 </span>
               )}
             </h3>

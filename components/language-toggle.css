@@ -1,0 +1,159 @@
+/*
+ * Keycap EN / JP language toggle: the base and "keys" variant styles of the
+ * swe-language-toggle package, kept as they were. The package switched colours
+ * with its own data-theme attribute; here the dark palette follows the site
+ * theme instead (next-themes puts .dark on <html>, following the system unless
+ * the visitor picked a theme).
+ *
+ * Size: width / height / gap in .swe-language-toggle--keys.
+ * Colours: the --swe-toggle-* properties (light first, then .dark).
+ */
+.swe-language-toggle {
+  --swe-toggle-ink: #263442;
+  --swe-toggle-muted: #6b7480;
+  --swe-toggle-accent: #547a9c;
+  --swe-toggle-border: #ccd2d8;
+  --swe-toggle-hover: #f1f4f6;
+  --swe-toggle-focus: #36658d;
+  box-sizing: border-box;
+  position: relative;
+  display: inline-grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 4px;
+  width: 126px;
+  height: 44px;
+  padding: 3px;
+  border: 1px solid var(--swe-toggle-border);
+  border-radius: 6px;
+  background: transparent;
+  color: var(--swe-toggle-ink);
+  /* The site's Geist Mono comes first: Chrome lacks ui-monospace, and its
+     generic monospace differs by lang, so "JP" (lang="ja") would otherwise
+     render in another font than "EN". */
+  font-family: var(--font-geist-mono), ui-monospace, "SFMono-Regular", Menlo,
+    Consolas, "Liberation Mono", monospace;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1;
+  vertical-align: middle;
+  isolation: isolate;
+}
+
+.dark .swe-language-toggle {
+  --swe-toggle-ink: #e4eaf0;
+  --swe-toggle-muted: #929eaa;
+  --swe-toggle-accent: #8cb1d0;
+  --swe-toggle-border: #45515d;
+  --swe-toggle-hover: #25313c;
+  --swe-toggle-focus: #a6c8e2;
+}
+
+.swe-language-toggle__link {
+  box-sizing: border-box;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+  border: 0;
+  border-radius: 3px;
+  color: var(--swe-toggle-muted);
+  font: inherit;
+  letter-spacing: 0.02em;
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+  transition: color 180ms ease, background-color 180ms ease;
+}
+
+.swe-language-toggle__link[aria-current="page"] {
+  color: var(--swe-toggle-ink);
+  font-weight: 600;
+}
+
+@media (hover: hover) {
+  .swe-language-toggle__link:hover {
+    color: var(--swe-toggle-ink);
+    background: var(--swe-toggle-hover);
+  }
+}
+
+.swe-language-toggle__link:focus-visible {
+  outline: 2px solid var(--swe-toggle-focus);
+  outline-offset: 2px;
+}
+
+/* Keys variant: two small, physical keyboard keys. */
+.swe-language-toggle--keys {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 6px;
+  width: 132px;
+  height: 44px;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+}
+
+.swe-language-toggle--keys .swe-language-toggle__link {
+  border: 1px solid var(--swe-toggle-border);
+  border-radius: 4px;
+  background: var(--swe-toggle-hover);
+  color: var(--swe-toggle-muted);
+  box-shadow: 0 2px 0 var(--swe-toggle-border);
+  transition: color 180ms ease, background-color 180ms ease,
+    border-color 180ms ease, box-shadow 180ms ease, transform 180ms ease;
+}
+
+/* The pressed key: sits 2px lower with its shadow gone. */
+.swe-language-toggle--keys .swe-language-toggle__link[aria-current="page"] {
+  border-color: var(--swe-toggle-ink);
+  background: var(--swe-toggle-ink);
+  color: var(--swe-toggle-hover);
+  box-shadow: 0 0 0 var(--swe-toggle-ink);
+  transform: translateY(2px);
+}
+
+@media (hover: hover) {
+  .swe-language-toggle--keys .swe-language-toggle__link:hover {
+    border-color: var(--swe-toggle-ink);
+    color: var(--swe-toggle-ink);
+  }
+
+  .swe-language-toggle--keys .swe-language-toggle__link[aria-current="page"]:hover {
+    color: var(--swe-toggle-hover);
+  }
+}
+
+.swe-language-toggle--keys .swe-language-toggle__link:focus-visible {
+  outline: 2px solid var(--swe-toggle-focus);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .swe-language-toggle__link,
+  .swe-language-toggle--keys .swe-language-toggle__link {
+    transition: none;
+  }
+}
+
+@media (forced-colors: active) {
+  .swe-language-toggle {
+    border-color: ButtonText;
+  }
+
+  .swe-language-toggle__link[aria-current="page"] {
+    color: LinkText;
+  }
+
+  .swe-language-toggle--keys .swe-language-toggle__link {
+    border-color: ButtonText;
+    box-shadow: 0 2px 0 ButtonText;
+  }
+
+  .swe-language-toggle--keys .swe-language-toggle__link[aria-current="page"] {
+    border-color: Highlight;
+    background: Highlight;
+    color: HighlightText;
+    box-shadow: none;
+    forced-color-adjust: none;
+  }
+}

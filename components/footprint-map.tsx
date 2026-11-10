@@ -2,7 +2,7 @@
 
 import 'leaflet/dist/leaflet.css';
 
-import type { Place } from '@/constants/footprint';
+import type { LocalizedPlace } from '@/constants/footprint';
 import { cn } from '@/lib/utils';
 import type {
   CircleMarker,
@@ -12,9 +12,11 @@ import type {
 import { useEffect, useRef } from 'react';
 
 type FootprintMapProps = {
-  places: Place[];
+  places: LocalizedPlace[];
   selectedId: string | null;
   onSelect: (id: string | null) => void;
+  /** Accessible name of the map region. */
+  label: string;
   className?: string;
 };
 
@@ -27,6 +29,7 @@ export function FootprintMap({
   places,
   selectedId,
   onSelect,
+  label,
   className,
 }: FootprintMapProps) {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -61,11 +64,7 @@ export function FootprintMap({
           className: 'fill-primary stroke-background',
           bubblingMouseEvents: false,
         })
-          .bindTooltip(
-            place.name === place.country
-              ? place.name
-              : `${place.name}, ${place.country}`
-          )
+          .bindTooltip(place.tooltip)
           .on('click', () => onSelectRef.current(place.id))
           .addTo(map);
         markers.set(place.id, marker);
@@ -110,7 +109,7 @@ export function FootprintMap({
     <div
       ref={containerRef}
       role="region"
-      aria-label="Map of places I’ve been"
+      aria-label={label}
       className={cn(
         // `isolate` keeps Leaflet's z-indexed panes under the sticky site header.
         // leaflet.css is unlayered, so its background needs `!` to be replaced.
@@ -123,7 +122,7 @@ export function FootprintMap({
   );
 }
 
-function showAll(map: LeafletMap, places: Place[], animate: boolean) {
+function showAll(map: LeafletMap, places: LocalizedPlace[], animate: boolean) {
   if (places.length === 0) {
     map.setView([20, 0], 2, { animate });
     return;

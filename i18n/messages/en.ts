@@ -32,11 +32,6 @@ export const en = {
   },
   // Badge on the newest timeline entry (Experience, Education).
   timeline: { latest: 'Latest' },
-  loading: {
-    title: 'Loading...',
-    description: 'Getting data from various sources...',
-    hint: 'This may take a few seconds...',
-  },
   notFound: { title: 'NotFound' },
   home: {
     github: {
@@ -100,14 +95,14 @@ export const en = {
       ['English', 'TOEFL 91'],
       ['Japanese', 'JLPT N2'],
       ['Chinese', 'Native'],
-    ],
+    ] as [string, string][],
     skills: [
       ['Programming', 'Python, TypeScript'],
       ['ML & LLM', 'PyTorch, RAG, multi-agent systems, LLM-as-Judge evaluation'],
       ['Backend', 'FastAPI, Node.js, GraphQL, Redis, ChromaDB'],
       ['Frontend', 'React'],
       ['Cloud & DevOps', 'AWS (S3, Batch, EC2), Docker, Prometheus, GitHub Actions, Git'],
-    ],
+    ] as [string, string][],
     publication: {
       label: 'Publication',
       title:

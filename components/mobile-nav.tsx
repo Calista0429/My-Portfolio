@@ -2,11 +2,12 @@
 
 import * as React from "react";
 import Link, { LinkProps } from "next/link";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { FiMusic } from "react-icons/fi";
 import { X } from "lucide-react";
 
 import { docsConfig } from "@/config/docs";
+import { localeFromPathname, localizePath } from "@/i18n/routing";
 import { cn } from "@/lib/utils";
 import { useMetaColor } from "@/hooks/use-meta-color";
 import { Button } from "./ui/button";
@@ -24,6 +25,8 @@ export function MobileNav({ toggleMusic, playing }: MobileNavProps) {
   const [open, setOpen] = React.useState(false);
   const [time, setTime] = React.useState(new Date());
   const { setMetaColor, metaColor } = useMetaColor();
+  // Labels stay English; links go to the page in the current language.
+  const locale = localeFromPathname(usePathname());
 
   React.useEffect(() => {
     const timer = setInterval(() => {
@@ -116,7 +119,7 @@ export function MobileNav({ toggleMusic, playing }: MobileNavProps) {
               {/* Primary Nav */}
               <div className="space-y-1">
                 <MobileLink
-                  href="/"
+                  href={localizePath("/", locale)}
                   onOpenChange={setOpen}
                   className="group flex items-center justify-between rounded-xl border border-border/40 bg-muted/30 px-4 py-3 text-sm font-medium transition-all hover:border-border hover:bg-muted/50"
                 >
@@ -142,7 +145,7 @@ export function MobileNav({ toggleMusic, playing }: MobileNavProps) {
                       item.href && !item.disabled && (
                         <MobileLink
                           key={item.href}
-                          href={item.href}
+                          href={localizePath(item.href, locale)}
                           onOpenChange={setOpen}
                           className="group flex items-center justify-between rounded-lg border border-border/30 bg-background/50 px-3 py-2.5 text-sm transition-all hover:border-border/60 hover:bg-muted/30"
                         >

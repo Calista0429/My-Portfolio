@@ -7,22 +7,22 @@ import {
 import Pager from '@/components/pager';
 import { Badge } from '@/components/ui/badge';
 import { mySkills } from '@/constants';
+import { messages, toLocale } from '@/i18n';
 
-const SkillsToolsPage = () => {
+const SkillsToolsPage = async ({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) => {
+  const text = messages[toLocale((await params).locale)].skills;
   return (
     <>
       <PageHeader>
-        <PageHeaderHeading>Skills & Tools</PageHeaderHeading>
+        <PageHeaderHeading>{text.title}</PageHeaderHeading>
         <PageHeaderHeading className="mt-2 text-muted-foreground">
-          Learned by coding all night and debugging all day!
+          {text.subtitle}
         </PageHeaderHeading>
-        <PageHeaderDescription>
-          As a Machine Learning & Software Engineer, I work across the stack:
-          Python for LLM agents, RAG and data pipelines, FastAPI, Redis and
-          ChromaDB on the backend, and React, TypeScript and GraphQL on the
-          frontend. I deploy and operate my work with AWS, Docker, GitHub
-          Actions and Prometheus.
-        </PageHeaderDescription>
+        <PageHeaderDescription>{text.description}</PageHeaderDescription>
       </PageHeader>
 
       {/* skills and tools badges */}

@@ -1,3 +1,5 @@
+import { localize, messages, type Locale } from '@/i18n';
+
 export type Place = {
   /** Unique id, e.g. "tokyo". */
   id: string;
@@ -300,3 +302,26 @@ export const places: Place[] = [
     ja: { name: '釜山' },
   },
 ];
+
+/** A place in one language, with its marker tooltip ready (sent to the browser). */
+export type LocalizedPlace = Omit<Place, 'ja'> & { tooltip: string };
+
+export function localizePlaces(locale: Locale): LocalizedPlace[] {
+  const { countries, tooltip } = messages[locale].footprint;
+  return places.map((place) => {
+    const { id, name, lat, lng, period, note, link, country } = localize(place, locale);
+    const countryName = countries[country as keyof typeof countries] ?? country;
+    return {
+      id,
+      name,
+      country: countryName,
+      lat,
+      lng,
+      // "Singapore, Singapore" would be silly; show the name alone.
+      tooltip: name === countryName ? name : tooltip(name, countryName),
+      ...(period ? { period } : {}),
+      ...(note ? { note } : {}),
+      ...(link ? { link } : {}),
+    };
+  });
+}

@@ -4,8 +4,18 @@ import { useEffect, useState } from "react";
 import GitHubCalendar from "react-github-calendar";
 import { siteConfig } from "@/config/site";
 import { useTheme } from "next-themes";
+import type { Messages } from "@/i18n";
 
-const GitHubGraphs = () => {
+type CalendarLabels = Messages["home"]["github"]["calendar"];
+
+const GitHubGraphs = ({
+  labels,
+  errorMessage,
+}: {
+  labels: CalendarLabels;
+  errorMessage: string;
+}) => {
+  const { totalCountRecent, ...yearLabels } = labels;
   const { resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
 
@@ -55,14 +65,14 @@ const GitHubGraphs = () => {
       <div className="md:hidden w-full">
         <GitHubCalendar
           username={siteConfig.links.githubUsername}
-          errorMessage="Could not fetch GitHub stats"
+          errorMessage={errorMessage}
           hideColorLegend
           theme={theme}
           colorScheme={resolvedTheme as "light" | "dark"}
           showWeekdayLabels={true}
           blockMargin={6}
           transformData={transformThreeMonths}
-          labels={{ totalCount: "{{count}} contributions in the last 3 months" }}
+          labels={{ ...yearLabels, totalCount: totalCountRecent }}
         />
       </div>
 
@@ -70,8 +80,9 @@ const GitHubGraphs = () => {
       <div className="hidden md:block w-full">
         <GitHubCalendar
           username={siteConfig.links.githubUsername}
-          errorMessage="Could not fetch GitHub stats"
+          errorMessage={errorMessage}
           hideColorLegend={false}
+          labels={yearLabels}
           theme={theme}
           colorScheme={resolvedTheme as "light" | "dark"}
           showWeekdayLabels={true}
