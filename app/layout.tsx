@@ -17,9 +17,6 @@ import { SideNav } from '@/components/side-nav';
 import { SiteFooter } from '@/components/site-footer';
 import { docsConfig } from '@/config/docs';
 
-import { setViewsServerAction } from './actions/getAndSetViewsServerAction';
-import { getLoveCountServerAction } from './actions/getAndSetLoveCountServerAction';
-
 import { SpeedInsights } from '@vercel/speed-insights/next';
 
 export const metadata: Metadata = {
@@ -62,18 +59,7 @@ interface RootLayoutProps {
   children: React.ReactNode;
 }
 
-async function loadStats() {
-  try {
-    await setViewsServerAction();
-    await getLoveCountServerAction();
-  } catch (error) {
-    console.error('Failed to load stats:', error);
-    return;
-  }
-}
-
 export default function RootLayout({ children }: RootLayoutProps) {
-  loadStats();
   return (
     <>
       <html lang="en" suppressHydrationWarning>
