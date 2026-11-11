@@ -105,6 +105,22 @@ export const places: Place[] = [
     ja: { name: '名古屋' },
   },
   {
+    id: 'nishi-kawaguchi',
+    name: 'Nishi-Kawaguchi',
+    country: 'Japan',
+    lat: 35.8156,
+    lng: 139.7045,
+    ja: { name: '西川口' },
+  },
+  {
+    id: 'kasukabe',
+    name: 'Kasukabe',
+    country: 'Japan',
+    lat: 35.9758,
+    lng: 139.752,
+    ja: { name: '春日部' },
+  },
+  {
     id: 'changchun',
     name: 'Changchun',
     country: 'China',
