@@ -15,14 +15,16 @@ import { LanguageToggle } from "./language-toggle";
 
 export function SiteHeader() {
   const [playing, setPlaying] = useState(false);
-  const [time, setTime] = useState(new Date());
+  // No time on the server: it would be the build's time, not match the
+  // browser's, and make React re-render the whole page on load.
+  const [time, setTime] = useState<Date | null>(null);
   const audioRef = useRef<HTMLAudioElement>(null);
 
   // Update time every second
   useEffect(() => {
-    const timer = setInterval(() => {
-      setTime(new Date());
-    }, 1000);
+    const tick = () => setTime(new Date());
+    tick();
+    const timer = setInterval(tick, 1000);
 
     return () => clearInterval(timer);
   }, []);
@@ -38,7 +40,7 @@ export function SiteHeader() {
   };
 
   // Format time as HH:MM:SS
-  const formattedTime = time.toLocaleTimeString('en-US', {
+  const formattedTime = time?.toLocaleTimeString('en-US', {
     timeZone: 'Asia/Tokyo',
     hour: '2-digit',
     minute: '2-digit',
@@ -70,7 +72,8 @@ export function SiteHeader() {
                 <span className="relative inline-flex h-2 w-2 rounded-full bg-green-500"></span>
               </div>
               <span className="text-xs font-medium tabular-nums tracking-tight text-foreground">
-                {formattedTime}
+                {/* Holds the clock's width until it starts. */}
+                {formattedTime ?? <span className="invisible">00:00:00</span>}
               </span>
             </div>
 

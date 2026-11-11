@@ -21,6 +21,9 @@ import { LocaleTextProvider } from '@/components/locale-text';
 
 import { SpeedInsights } from '@vercel/speed-insights/next';
 
+// Google Analytics loads only once a measurement ID is set (see .env.example).
+const gaId = process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID;
+
 // Both languages are prerendered: /about (English, via middleware.ts) and /ja/about.
 export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));
@@ -137,9 +140,7 @@ export default async function RootLayout({
             </LenisProvider>
           </ThemeProvider>
           <Toaster richColors position="top-center" />
-          <GoogleAnalytics
-            gaId={process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID || ''}
-          />
+          {gaId && <GoogleAnalytics gaId={gaId} />}
           <Analytics />
           <SpeedInsights />
         </body>

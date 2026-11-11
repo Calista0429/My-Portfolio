@@ -153,10 +153,6 @@ export const en = {
       'My academic journey has been complemented by hands-on projects and coursework, enabling me to build practical skills and a deep understanding of modern technological solutions.',
     ],
   },
-  testimonials: {
-    title: 'Testimonials',
-    subtitle: 'Get the truth from those who’ve seen my work firsthand!',
-  },
 };
 
 export type Messages = typeof en;

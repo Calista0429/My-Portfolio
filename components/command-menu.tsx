@@ -3,7 +3,7 @@
 import * as React from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { type DialogProps } from "@radix-ui/react-dialog";
-import { Circle, File, Laptop, Moon, Sun } from "lucide-react";
+import { Circle, File, Laptop, Moon, Search, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
  
 import { docsConfig } from "@/config/docs";
@@ -54,17 +54,22 @@ export function CommandMenu({ ...props }: DialogProps) {
 
   return (
     <>
+      {/* Only an icon below xl: the full field doesn't fit beside the nav
+          links and the EN / JP keys on tablets and small laptops. */}
       <Button
         variant="outline"
         className={cn(
-          "relative h-8 w-full justify-start rounded-[0.5rem] bg-muted/50 text-sm font-normal text-muted-foreground shadow-none sm:pr-12 md:w-40 lg:w-56 xl:w-64"
+          "relative size-8 rounded-[0.5rem] bg-muted/50 p-0 text-sm font-normal text-muted-foreground shadow-none xl:w-64 xl:justify-start xl:pl-4 xl:pr-12"
         )}
         onClick={() => setOpen(true)}
         {...props}
       >
-        <span className="hidden lg:inline-flex">Search sections...</span>
-        <span className="inline-flex lg:hidden">Search...</span>
-        <kbd className="pointer-events-none absolute right-[0.3rem] top-[0.3rem] hidden h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium opacity-100 sm:flex">
+        {/* Wrapped so the button's own padding for svg children stays off. */}
+        <span className="xl:hidden">
+          <Search />
+        </span>
+        <span className="sr-only xl:not-sr-only">Search sections...</span>
+        <kbd className="pointer-events-none absolute right-[0.3rem] top-[0.3rem] hidden h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium opacity-100 xl:flex">
           <span className="text-xs">⌘</span>K
         </kbd>
       </Button>
